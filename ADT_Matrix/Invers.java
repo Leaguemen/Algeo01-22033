@@ -1,6 +1,6 @@
-package Invers;
+package ADT_Matrix;
 import java.util.Scanner;
-import ADT_Matrix.*;
+
 
 public class Invers {
     

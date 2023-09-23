@@ -260,9 +260,9 @@ public class Matrix {
         float temp;
 
         for (i = 0; i < m.colEff; i++) {
-            temp = m.memory[Row1-1][i];
-            m.memory[Row1-1][i] = m.memory[Row2-1][i];
-            m.memory[Row2-1][i] = temp;
+            temp = m.memory[Row1][i];
+            m.memory[Row1][i] = m.memory[Row2][i];
+            m.memory[Row2][i] = temp;
         }
         nSwap++;
     }
@@ -278,7 +278,7 @@ public class Matrix {
         int i;
 
         for (i = 0; i <= getLastIdxCol(m); i++) {
-            m.memory[Row-1][i] *= multiplier;
+            m.memory[Row][i] *= multiplier;
         }
     }
 
@@ -294,18 +294,9 @@ public class Matrix {
         int i;
 
         for (i = 0; i<= getLastIdxCol(m); i++) {
-            m.memory[Row1-1][i] += (m.memory[Row2-1][i]*x);
+            m.memory[Row1][i] += (m.memory[Row2][i]*x);
         }
     }
 
-    public static void main(String[] args){
-        float b;
-        Matrix m = new Matrix(3, 3);
-        readMatrix(m,3,3);
-        b = getElmtDiagonal(m, 101);
-        System.out.println(b);
-        displayMatrix(m);
-
-    }
 }
 
