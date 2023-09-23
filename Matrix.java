@@ -1,6 +1,4 @@
 import java.util.Scanner;
-
-import javax.swing.text.html.parser.Element; 
 public class Matrix {
     final static int ROW_CAP = 100;
     final static int COL_CAP = 100;
@@ -17,14 +15,8 @@ public class Matrix {
     }
 
     //Methods
-    public static void readMatrix(Matrix m,int nRow, int nCol){
-        try(Scanner input = new Scanner(System.in)){
-            for(int i =0; i < m.rowEff;i++){
-                for(int j = 0; j< m.colEff;j++){
-                    m.memory[i][j] = input.nextInt();
-                }
-            }
-        }
+    public static boolean isMatrixIdxValid(int i ,int j){
+        return(i<ROW_CAP && j< COL_CAP && i >= 0 && j>= 0);
     }
 
     public static int getLastIdxRow(Matrix m){
@@ -35,22 +27,18 @@ public class Matrix {
         return(m.colEff-1);
     }
 
-    public static void displayMatrix(Matrix m){
-        for(int i = 0; i<m.rowEff;i++){
-            for(int j = 0; j<m.colEff;j++){
-                if(j == getLastIdxCol(m)){
-                    System.out.println(m.memory[i][j]);
-                }
-                else{
-                    System.out.print(m.memory[i][j]+" ");
-                }
-            }
-        }
-    }
-
-
     public static boolean isIdxEff(Matrix m, int i, int j) {
         return (i <= getLastIdxRow(m) && j <= getLastIdxCol(m));
+    }
+
+    public static float getElmtDiagonal(Matrix m, int i){
+        try{
+            return(m.memory[i][i]);
+        }
+        catch(ArrayIndexOutOfBoundsException e){
+            System.err.println("i dan j harus efektif");
+            return(-1);
+        }
     }
 
     public static void copyMatrix(Matrix mIn, Matrix mOut) {
@@ -65,27 +53,29 @@ public class Matrix {
         }
     }
 
-    public static Matrix subtractMatrix(Matrix m1, Matrix m2) {
-        int i, j;
-        
-        for (i = 0; i <= getLastIdxRow(m2); i++) {
-            for (j = 0; j <= getLastIdxCol(m2); j++) {
-                m1.memory[i][j] -= m2.memory[i][j];
+
+    public static void readMatrix(Matrix m,int nRow, int nCol){
+        try(Scanner input = new Scanner(System.in)){
+            for(int i =0; i < m.rowEff;i++){
+                for(int j = 0; j< m.colEff;j++){
+                    m.memory[i][j] = input.nextFloat();
+                }
             }
         }
-        return m1;
-
-    public static boolean isMatrixValid(int i ,int j){
-        return(i<ROW_CAP && j< COL_CAP && i >= 0 && j>= 0);
     }
 
-    public static int getElmtDiagonal(Matrix m, int i){
-        try{
-            return(m.memory[i][i]);
-        }
-        catch(ArrayIndexOutOfBoundsException e){
-            System.err.println("i dan j harus efektif");
-            return(-1);
+
+
+    public static void displayMatrix(Matrix m){
+        for(int i = 0; i<m.rowEff;i++){
+            for(int j = 0; j<m.colEff;j++){
+                if(j == getLastIdxCol(m)){
+                    System.out.println(m.memory[i][j]);
+                }
+                else{
+                    System.out.print(m.memory[i][j]+" ");
+                }
+            }
         }
     }
 
@@ -100,54 +90,15 @@ public class Matrix {
         return result;
     }
 
-    public static Matrix multiplyByConst(Matrix m, int x){
-        Matrix result = new Matrix(m.rowEff,m.colEff);
-        for(int i = 0;i< m.rowEff;i++){
-            for(int j =0; j<m.colEff;j++){
-                result.memory[i][j] = m.memory[i][j]*x;
+    public static Matrix subtractMatrix(Matrix m1, Matrix m2) {
+        int i, j;
+        
+        for (i = 0; i <= getLastIdxRow(m2); i++) {
+            for (j = 0; j <= getLastIdxCol(m2); j++) {
+                m1.memory[i][j] -= m2.memory[i][j];
             }
         }
-        return(result);
-    }
-
-    public static void pMultiplyByConst(Matrix m, int k){
-        for(int i = 0;i< m.rowEff;i++){
-            for(int j =0; j<m.colEff;j++){
-                m.memory[i][j] = m.memory[i][j]*k;
-            }
-        }       
-    }
-
-    public static boolean isMatrixSizeEqual(Matrix m, Matrix n){
-        return((m.rowEff==n.rowEff)&&(m.colEff==n.colEff));
-    }
-
-    public static int countElmt(Matrix m){
-        return m.rowEff*m.colEff;
-    }
-
-    public static boolean isIdentity(m){
-        if(m.rowEff == m.colEff){
-            Matrix identity = new Matrix(m.rowEff,m.colEff);
-            for(int i=0;i<m.rowEff;i++){
-                for(int j=0;j<m.colEff;j++){
-                    if(i == j){
-                        identity.memory[i][j]=1;
-                    }
-                }
-            }
-            return isMatrixEqual(m,identity);
-        }
-        return(false);
-    }
-    public static void main(String[] args){
-        int b;
-        Matrix m = new Matrix(3, 3);
-        readMatrix(m,3,3);
-        b = getElmtDiagonal(m, 101);
-        System.out.println(b);
-        displayMatrix(m);
-
+        return m1;
     }
 
     public static Matrix multiplyMatrix(Matrix m1, Matrix m2) {
@@ -181,6 +132,24 @@ public class Matrix {
         return m;
     }
 
+    public static Matrix multiplyByConst(Matrix m, int x){
+        Matrix result = new Matrix(m.rowEff,m.colEff);
+        for(int i = 0;i< m.rowEff;i++){
+            for(int j =0; j<m.colEff;j++){
+                result.memory[i][j] = m.memory[i][j]*x;
+            }
+        }
+        return(result);
+    }
+
+    public static void pMultiplyByConst(Matrix m, int k){
+        for(int i = 0;i< m.rowEff;i++){
+            for(int j =0; j<m.colEff;j++){
+                m.memory[i][j] = m.memory[i][j]*k;
+            }
+        }       
+    }
+
     public static boolean isMatrixEqual(Matrix m1, Matrix m2) {
         boolean sama = false;
         int i = 0;
@@ -205,6 +174,14 @@ public class Matrix {
         return !isMatrixEqual(m1,m2);
     }
 
+    public static boolean isMatrixSizeEqual(Matrix m, Matrix n){
+        return((m.rowEff==n.rowEff)&&(m.colEff==n.colEff));
+    }
+
+    public static int countElmt(Matrix m){
+        return m.rowEff*m.colEff;
+    }
+
     public static boolean isSquare(Matrix m){ //bryan
         return (m.colEff == m.rowEff);
     }
@@ -226,6 +203,21 @@ public class Matrix {
             }
         }
         return simetri;
+    }
+
+    public static boolean isIdentity(Matrix m){
+        if(m.rowEff == m.colEff){
+            Matrix identity = new Matrix(m.rowEff,m.colEff);
+            for(int i=0;i<m.rowEff;i++){
+                for(int j=0;j<m.colEff;j++){
+                    if(i == j){
+                        identity.memory[i][j]=1;
+                    }
+                }
+            }
+            return isMatrixEqual(m,identity);
+        }
+        return(false);
     }
 
     public static Matrix transpose(Matrix m) {
@@ -252,5 +244,15 @@ public class Matrix {
             } 
         }
     }
+
+    public static void main(String[] args){
+        float b;
+        Matrix m = new Matrix(3, 3);
+        readMatrix(m,3,3);
+        b = getElmtDiagonal(m, 101);
+        System.out.println(b);
+        displayMatrix(m);
+
+    }
 }
-//m.readmatrix
+
