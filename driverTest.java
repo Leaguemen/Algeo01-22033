@@ -4,6 +4,5 @@ public class driverTest {
         Matrix m = new Matrix(3, 3);
         Matrix.readMatrix(m,3,3);
         Matrix.displayMatrix(m);
-
     }
 }

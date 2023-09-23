@@ -133,7 +133,7 @@ public class Matrix {
         return m;
     }
 
-    public static Matrix multiplyByConst(Matrix m, int x){
+    public static Matrix multiplyByConst(Matrix m, float x){
         Matrix result = new Matrix(m.rowEff,m.colEff);
         for(int i = 0;i< m.rowEff;i++){
             for(int j =0; j<m.colEff;j++){
@@ -183,7 +183,7 @@ public class Matrix {
         return m.rowEff*m.colEff;
     }
 
-    public static boolean isSquare(Matrix m){ //bryan
+    public static boolean isSquare(Matrix m){
         return (m.colEff == m.rowEff);
     }
 
@@ -243,6 +243,58 @@ public class Matrix {
                 m.memory[i][j] = m.memory[j][i];
                 m.memory[j][i] = temp;
             } 
+        }
+    }
+
+    public static void Swap(Matrix m, int Row1, int Row2, int nSwap) {
+        /* I.S : m terdefinisi, Row1 dan Row2 efektif, nSwap terdefinisi */
+        /* F.S : Row1 dan Row2 di matriks m ditukar, nSwap bertambah 1 */
+        /* 
+        Matriks m, Row1 = Baris pertama, Row2 = baris ketiga
+        1 2 3      7 8 9
+        4 5 6  ->  4 5 6
+        7 8 9      1 2 3
+        */
+
+        int i;
+        float temp;
+
+        for (i = 0; i < m.colEff; i++) {
+            temp = m.memory[Row1-1][i];
+            m.memory[Row1-1][i] = m.memory[Row2-1][i];
+            m.memory[Row2-1][i] = temp;
+        }
+        nSwap++;
+    }
+
+    public static void MultiplyRow (Matrix m, int Row, float multiplier) {
+        /* I.S : m terdefinisi, Row efektif pada m */
+        /* F.S : Baris ke-Row pada m dikalikan dengan multiplier */
+        /*
+        1 2 3        Row = 1       0.5 1 1.5
+        4 5 6         --->          4  5  6
+        7 8 9   multiplier = 0.5    7  8  9
+        */
+        int i;
+
+        for (i = 0; i <= getLastIdxCol(m); i++) {
+            m.memory[Row-1][i] *= multiplier;
+        }
+    }
+
+    public static void AddRowByRow (Matrix m, int Row1, int Row2, float x) {
+        /* I.S : m  terdefinisi, Row1 dan Row2 efektif di m, multiply terdefinsi */
+        /* F.S : Row1 di m ditambahkan dengan Row2*x */
+        /*
+        Row1 = 2, Row2 = 3, multiply = -1
+        1 2 3            1  2  3
+        4 5 6    -->    -3 -3 -3
+        7 8 9            7  8  9
+        */
+        int i;
+
+        for (i = 0; i<= getLastIdxCol(m); i++) {
+            m.memory[Row1-1][i] += (m.memory[Row2-1][i]*x);
         }
     }
 
