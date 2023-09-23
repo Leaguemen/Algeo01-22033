@@ -1,3 +1,4 @@
+package Tubes_Algeo_Matrix_OSC;
 import java.util.Scanner;
 public class Matrix {
     final static int ROW_CAP = 100;
