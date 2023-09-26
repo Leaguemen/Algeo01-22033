@@ -2,7 +2,7 @@ package ADT_Matrix;
 import java.lang.Math;
 
 public class Cofactor {
-    public static float CofactorDeterminant (Matrix m) {
+    public static float cofactorDeterminant (Matrix m) {
     /* Prekondisi: isSquare(m) */
     /* Menghitung nilai determinan m */
     // KAMUS
@@ -27,13 +27,13 @@ public class Cofactor {
                         }
                     }
                 }
-                det += (float) (Math.pow(-1,j) * m.memory[0][j] * CofactorDeterminant(m1));
+                det += (float) (Math.pow(-1,j) * m.memory[0][j] * cofactorDeterminant(m1));
             }
         }
         return det;
     }
 
-    public static float EntryCofactor (Matrix m, int idxRow, int idxCol) {
+    public static float entryCofactor (Matrix m, int idxRow, int idxCol) {
         /* Menghasilkan kofaktor entri matriks dengan indeks idxRow dan idxCol */
         Matrix mNew = new Matrix(m.rowEff-1, m.colEff-1);
         int last, i, j, k, l;
@@ -53,16 +53,16 @@ public class Cofactor {
             }
 
         }
-        return (float) Math.pow(-1,idxRow+idxCol) * CofactorDeterminant(mNew);
+        return (float) Math.pow(-1,idxRow+idxCol) * cofactorDeterminant(mNew);
     }
 
-    public static Matrix CofactorMatrix (Matrix m) {
+    public static Matrix cofactorMatrix (Matrix m) {
         int i = 0; int j = 0;
         int last = Matrix.getLastIdxRow(m);
         Matrix mNew = new Matrix(last+1, last+1);
         for (i=0;i<=last;i++) {
             for (j=0;j<=last;j++) {
-                mNew.memory[i][j] = (float) EntryCofactor(m,i,j);
+                mNew.memory[i][j] = (float) entryCofactor(m,i,j);
             }
         }
 

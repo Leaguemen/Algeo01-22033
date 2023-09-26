@@ -26,9 +26,9 @@ public class driverTest {
         Matrix m = new Matrix(3, 3);
         Matrix.readMatrix(m,3,3);
         Matrix.displayMatrix(m);
-        System.out.println(Cofactor.CofactorDeterminant(m));
-        System.out.println(Cofactor.EntryCofactor(m, 3, 3));
-        m1 = Cofactor.CofactorMatrix(m);
+        System.out.println(Cofactor.cofactorDeterminant(m));
+        System.out.println(Cofactor.entryCofactor(m, 3, 3));
+        m1 = Cofactor.cofactorMatrix(m);
         Matrix.displayMatrix(m1);
     }
 }
