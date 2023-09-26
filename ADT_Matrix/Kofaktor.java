@@ -28,7 +28,7 @@ public class Kofaktor {
                         m1.memory[i][k] = m.memory[i][k+1];
                     }
                 }
-                det += (Math.pow(-1,j) * m.memory[0][j] * DeterminanKofaktor(m1));
+                det += (Math.pow(-1,j) * m.memory[0][j] * CofactorDeterminant(m1));
             }
         }
         return det;
