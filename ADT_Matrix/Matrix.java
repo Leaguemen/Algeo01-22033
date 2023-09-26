@@ -1,8 +1,8 @@
 package ADT_Matrix;
 import java.util.Scanner;
 public class Matrix {
-    final static int ROW_CAP = 100;
-    final static int COL_CAP = 100;
+    public final static int ROW_CAP = 100;
+    public final static int COL_CAP = 100;
 
     public float[][] memory;
     public int rowEff;

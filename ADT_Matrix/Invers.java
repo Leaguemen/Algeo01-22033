@@ -1,6 +1,4 @@
 package ADT_Matrix;
-import java.util.Scanner;
-
 
 public class Invers {
     
@@ -14,5 +12,77 @@ public class Invers {
             }
         }
         return identity;
+    }
+
+    public static Matrix MatriksSoal (Matrix m) {
+        Matrix hasil = new Matrix(m.rowEff, m.rowEff);
+        int i, j;
+
+        for (i = 0; i < hasil.rowEff; i++) {
+            for (j = 0; j < hasil.colEff; j++) {
+                hasil.memory[i][j] = m.memory[i][j];
+            }
+        }
+        return hasil;
+    }
+
+    public static Matrix MatriksJawaban (Matrix m) {
+        Matrix hasil = new Matrix(m.rowEff, 1);
+        int i;
+
+        for (i = 0; i < hasil.rowEff; i++) {
+            hasil.memory[i][0] = m.memory[i][Matrix.getLastIdxCol(m)];
+        }
+        return hasil;
+    }
+
+    public static Matrix InverseWithGaussJordan (Matrix m) {
+        int i, j, k;
+        int n = 0;
+        Matrix hasilInvers = MakeIdentity(m.rowEff,m.colEff);
+
+        for (i = 0; i < m.colEff; i++) {
+            // Mencari element diagonal bukan nol
+            if (m.memory[i][i] == 0) {
+                boolean tidakKetemu = true;
+                j = i+1;
+                while (tidakKetemu && j <m.rowEff) {
+                    if (m.memory[j][i] != 0) {
+                        tidakKetemu = false;
+                        Matrix.Swap(m, i, j, n);
+                        Matrix.Swap(hasilInvers, i, j, n);
+                    }
+                }
+            }
+
+            // Menjadikan elemen diagonal manjadi 1 utama
+            Matrix.MultiplyRow(hasilInvers, i, (float)1/m.memory[i][i]);
+            Matrix.MultiplyRow(m, i, (float)1/m.memory[i][i]);
+            
+            // Mengenolkan elemen di bawah dan atas 1 utama
+            for (k = 0; k < m.rowEff; k++) {
+                if (k != i) {
+                    float x = (-1)*m.memory[k][i];
+                    Matrix.AddRowByRow(m, k, i, x);
+                    Matrix.AddRowByRow(hasilInvers, k, i, x);
+                }
+            }
+        }
+
+        return hasilInvers;
+    }
+
+    public static void SolusiSPLDenganInvers (Matrix m) {
+        int i;
+        Matrix A = MatriksSoal(m);
+        Matrix b = MatriksJawaban(m);
+        
+        Matrix Ainvers = InverseWithGaussJordan(A);
+        Matrix solusi = Matrix.multiplyMatrix(Ainvers, b);
+        
+        for (i = 1; i <= solusi.rowEff; i++) {
+            System.out.print("x" + i + " = ");
+            System.out.println(solusi.memory[i-1][0]);
+        }
     }
 }
