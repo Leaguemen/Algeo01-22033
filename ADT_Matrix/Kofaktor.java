@@ -2,7 +2,7 @@ package ADT_Matrix;
 import java.lang.Math;
 
 public class Kofaktor {
-    public static float DeterminanKofaktor (Matrix m) {
+    public static float CofactorDeterminant (Matrix m) {
     /* Prekondisi: isSquare(m) */
     /* Menghitung nilai determinan m */
     // KAMUS
@@ -34,7 +34,7 @@ public class Kofaktor {
         return det;
     }
 
-    public static float KofaktorEntri (Matrix m, int idxRow, int idxCol) {
+    public static float EntryCofactor (Matrix m, int idxRow, int idxCol) {
         /* Menghasilkan kofaktor entri matriks dengan indeks idxRow dan idxCol */
         Matrix mNew = new Matrix(m.rowEff-1, m.colEff-1);
         int last, i, j, k, l;
@@ -61,16 +61,16 @@ public class Kofaktor {
             i++;
             k++;
         }
-        return (float) Math.pow(-1,idxRow+idxCol) * DeterminanKofaktor(mNew);
+        return (float) Math.pow(-1,idxRow+idxCol) * CofactorDeterminant(mNew);
     }
 
-    public static Matrix MatrixKofaktor (Matrix m) {
+    public static Matrix CofactorMatrix (Matrix m) {
         int i = 0; int j = 0;
         int last = Matrix.getLastIdxRow(m);
         Matrix mNew = new Matrix(last, last);
         for (i=0;i<=last;i++) {
             for (j=0;j<=last;j++) {
-                mNew.memory[i][j] = (float) KofaktorEntri(m,i,j);
+                mNew.memory[i][j] = (float) EntryCofactor(m,i,j);
             }
         }
 

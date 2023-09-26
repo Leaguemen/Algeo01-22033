@@ -298,7 +298,7 @@ public class Matrix {
         }
     }
 
-    public static Matrix KoefisienSPL (Matrix m) {
+    public static Matrix coefficientMatrix (Matrix m) {
         Matrix mNew;
         int i,j;
         int last = getLastIdxRow(m);
