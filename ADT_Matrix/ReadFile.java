@@ -33,6 +33,7 @@ public class ReadFile {
                 Scanner input = new Scanner(System.in);
                 String currentDirectory = System.getProperty("user.dir");
                 File directory = new File(currentDirectory);
+                System.out.print("Masukkan nama file: ");
                 namaFile = input.nextLine();
                 for (File file : directory.listFiles()) {
                     if (file.isFile() && file.getName().equals(namaFile)) {
@@ -82,5 +83,90 @@ public class ReadFile {
         }
         m.rowEff = k;
         return m;
+    }
+
+    public static void readBicubicFile (String namaFile, Matrix m) throws Exception {
+        File file = new File(namaFile);
+        int i = 0;
+        int j; int k;
+        String line;
+        String temp;
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        while ((line = br.readLine()) != null) {
+            temp = "";
+            k = 0;
+            if (i < 4) {
+                for (j = 0; j < line.length(); j++) {
+                    if (line.charAt(j) != ' ') {
+                        temp += line.charAt(j);
+                    } else {
+                        m.memory[i][k] = Float.parseFloat(temp);
+                        temp = "";
+                        k++;
+                    }
+
+                    if (j == (line.length()-1)) {
+                        m.memory[i][k] = Float.parseFloat(temp);
+                        temp = "";
+                        k++;
+                    }
+                }
+                i++;
+            }
+        }
+    }
+
+    public static Float readX (String namaFile) throws Exception {
+        File file = new File(namaFile);
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        String temp = "";
+        float x = 0;
+        int i = 0; int j;
+        
+        while ((line = br.readLine()) != null) {
+            if (i == 4) {
+                for (j = 0; j < line.length()-1; j++) {
+                    if (line.charAt(j) != ' ') {
+                        temp += line.charAt(j);
+                    } else {
+                        x = Float.parseFloat(temp);
+                        break;
+                    }
+                }
+            }
+            i++;
+        }
+
+        return x;
+    }
+
+    public static Float readY (String namaFile) throws Exception {
+        File file = new File(namaFile);
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        String temp = "";
+        float y = 0;
+        int i = 0; int j;
+
+        while ((line = br.readLine()) != null) {
+            if (i == 4) {
+                for (j = 0; j < line.length(); j++) {
+                    if (line.charAt(j) != ' ') {
+                        temp += line.charAt(j);
+                    } else {
+                        temp = "";
+                    }
+
+                    if (j == line.length()-1) {
+                        y = Float.parseFloat(temp);
+                    }
+                }
+            }
+            i++;
+        }
+
+        return y;
     }
 }
