@@ -1,7 +1,4 @@
-import ADT_Matrix.Matrix;
-import ADT_Matrix.Cramer;
-import ADT_Matrix.Invers;
-import ADT_Matrix.Cofactor;;
+import ADT_Matrix.*;
 
 public class driverTest {
         public static void main(String[] args) throws Exception{
