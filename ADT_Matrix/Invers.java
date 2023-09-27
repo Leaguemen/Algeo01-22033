@@ -1,5 +1,7 @@
 package ADT_Matrix;
 
+import java.util.*;
+
 public class Invers {
     
     public static Matrix MakeIdentity (int Row, int Col) {
@@ -72,12 +74,41 @@ public class Invers {
         return hasilInvers;
     }
 
+    public static Matrix InverseWithCofactor (Matrix m) {
+        Matrix hasilInvers = new Matrix(m.rowEff, m.colEff);
+        int i, j;
+
+        for (i = 0; i < m.rowEff; i++) {
+            for (j = 0; j < m.colEff; j++) {
+                hasilInvers.memory[i][j] = ADT_Matrix.Cofactor.entryCofactor(m, i, j);
+            }
+        }
+
+        hasilInvers = Matrix.transpose(hasilInvers);
+        Matrix.multiplyByConst(hasilInvers, (float)1/Cofactor.cofactorDeterminant(m));
+
+        return hasilInvers;
+    }
+
     public static void SolusiSPLDenganInvers (Matrix m) {
-        int i;
+        Scanner in = new Scanner(System.in);
+        Matrix Ainvers = new Matrix(0,0);
+        int i; int pilihan = 3;
         Matrix A = MatriksSoal(m);
         Matrix b = MatriksJawaban(m);
+
+        while (pilihan < 1 || pilihan > 2) {
+            System.out.println("Pilih metode invers:\n1. Invers dengan matriks identitas\n2. Invers dengan ekspansi kofaktor");
+            pilihan = in.nextInt();
+            if (pilihan == 1) {
+                Ainvers = InverseWithGaussJordan(A);
+            } else if (pilihan == 2) {
+                Ainvers = InverseWithCofactor(m);
+            } else {
+                System.out.println("Tidak ada pilihan tersebut");
+            }
+        }
         
-        Matrix Ainvers = InverseWithGaussJordan(A);
         Matrix solusi = Matrix.multiplyMatrix(Ainvers, b);
         
         for (i = 1; i <= solusi.rowEff; i++) {
