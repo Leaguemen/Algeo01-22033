@@ -302,7 +302,7 @@ public class Matrix {
         Matrix mNew;
         int i,j;
         int last = getLastIdxRow(m);
-        mNew = new Matrix(last,last);
+        mNew = new Matrix(last+1,last+1);
 
         for (i=0;i<=last;i++) {
             for (j=0;j<=last;j++) {
