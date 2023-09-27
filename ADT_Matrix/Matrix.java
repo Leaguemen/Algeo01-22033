@@ -298,5 +298,18 @@ public class Matrix {
         }
     }
 
+    public static Matrix coefficientMatrix (Matrix m) {
+        Matrix mNew;
+        int i,j;
+        int last = getLastIdxRow(m);
+        mNew = new Matrix(last+1,last+1);
+
+        for (i=0;i<=last;i++) {
+            for (j=0;j<=last;j++) {
+                mNew.memory[i][j] = m.memory[i][j];
+            }
+        }
+        return mNew;
+    }
 }
 
