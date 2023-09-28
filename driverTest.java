@@ -30,8 +30,13 @@ public class driverTest {
         // Matrix.displayMatrix(m1);
 
         // Cobain Cramer
-        Matrix m = new Matrix(4,5);
-        Matrix.readMatrix(m,4,5);
-        Cramer.SPLCramer(m);
+        // Matrix m = new Matrix(4,5);
+        // Matrix.readMatrix(m,4,5);
+        // Cramer.SPLCramer(m);
+
+        // Coba BicubicSpline
+        Matrix m = new Matrix(4,4);
+        Matrix.readMatrix(m,4,4);
+        BicubicSpline.interpolation(m, (float) 0.5,(float) 0.5);   
     }
 }
