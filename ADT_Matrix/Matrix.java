@@ -62,6 +62,8 @@ public class Matrix {
                     m.memory[i][j] = input.nextFloat();
                 }
             }
+            input.nextLine();
+            input.close();
         }
     }
 
