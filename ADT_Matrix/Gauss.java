@@ -100,6 +100,9 @@ public class Gauss {
         }
         return result;
     }
+
+
+
     public static void makeEchelon(Matrix m){
     for(int i=0;i<m.rowEff;i++){
         // membuat yg atas elemen kiri atas menjadi leading one
@@ -109,13 +112,24 @@ public class Gauss {
             int idxRow =0;
             for(int k=i;k>=0;k--){
             //mengurangi row selanjutnya agar elemen paling kiri dari row selanjutnya hasilnya 0
-            Matrix.AddRowByRow(m,i+1, idxRow, (float)-1*(m.memory[i+1][firstNonZeroIdx(m, i+1)]));
+            if(m.memory[i+1][idxRow]!=0){
+                Matrix.AddRowByRow(m,i+1, idxRow, (float)-1*(m.memory[i+1][firstNonZeroIdx(m, i+1)]));
+            }
             idxRow++;
+            }
+        }  
+        }
+    //swap some irregularities
+        int dummy=0;
+    for(int i =0;i<m.rowEff;i++){
+        for(int j=i+1;j<m.rowEff;j++){
+            if(m.memory[j][firstNonZeroIdx(m, i)]!=0){
+                Matrix.Swap(m, j, i, dummy);
             }
         }
     }  
-    Matrix.displayMatrix(m);
     }
+
 
     public static void printArrayNeatly(String[] arr) {
         // Iterate through the array elements
@@ -170,24 +184,28 @@ public class Gauss {
         }
     }
     
-    public static void gauss(Matrix m){
+    public static float[] gauss(Matrix m){
         int flagAllZero = 0;
         for(int i =0; i<m.rowEff;i++){
             if(m.memory[i][0]==0){
                 flagAllZero+=1;
             }
         }
-        System.out.println(flagAllZero);
+        //System.out.println(flagAllZero);
         if(flagAllZero<m.rowEff){
             makeEchelon(m);
             if(uniqueSolution(m)){
+                System.out.println("SOLUSI UNIK");
                 float[] solutions = backwardSubstition(m);
                 for(int i=1;i<=m.rowEff;i++){
                     System.out.println(String.format("X%d = %f",i,solutions[i-1]));
                 }
+                return solutions;
             }
             else if(noSolution(m)){
                 System.out.println("TIDAK ADA SOLUSI");
+                float[] keluar = new float[1];
+                return keluar;
             }
             else{
                 System.out.println("BANYAK SOLUSI");
@@ -217,7 +235,7 @@ public class Gauss {
                         parameterAmmount++;
                     }
                 }
-                System.out.println("Banyak parameter :"+ Integer.toString(parameterAmmount));
+                //System.out.println("Banyak parameter :"+ Integer.toString(parameterAmmount));
                 //set beberapa unknow as parameter dengan syarat jangan nimpa yang sudah diketahui
                 int parameterNumber = 1;
                 String parameterVariabel = "P";
@@ -235,9 +253,9 @@ public class Gauss {
                 makeEchelon(newMatrix);
                 float[] numberSolution = backwardSubstition(newMatrix);
                 String[] actualSolution = new String[m.colEff-1];
-                printArrayNeatly(actualSolution);
-                System.out.println("\n");
-                System.out.println("\n");
+                //printArrayNeatly(actualSolution);
+                //System.out.println("\n");
+                //System.out.println("\n");
                 //populate actual solution
                 for(int i =0;i<actualSolution.length;i++){
                     if(solutions[i]==null){
@@ -248,19 +266,19 @@ public class Gauss {
                     }
                 }
 
-               System.out.println("current matrix");
-               Matrix.displayMatrix(m);
-               System.out.println("");
+               //System.out.println("current matrix");
+               //Matrix.displayMatrix(m);
+               //System.out.println("");
                 for(int j = 0; j<actualSolution.length;j++){
                     if(!containsString(solutions, actualSolution[j])){
-                        System.out.println("idx yang masuk : "+ Integer.toString(j));
+                        //System.out.println("idx yang masuk : "+ Integer.toString(j));
                         int idx =0;
-                        System.out.println("array parameter solutions : ");
+                        //System.out.println("array parameter solutions : ");
                         printArrayNeatly(solutions);
-                        System.out.println("");
+                        //System.out.println("");
                         while(solutions[idx] != null){
                             if(m.memory[j-parameterAmmount][idx+findIndex(numberSolution,safeStringToFloat(actualSolution[j]))]>1){
-                                System.out.println("Halo memori > 1");
+                                //System.out.println("Halo memori > 1");
                                 actualSolution[j] += "-" + Float.toString(m.memory[j-parameterAmmount][idx +findIndex(numberSolution,safeStringToFloat(actualSolution[j]))]) + solutions[idx];
                             }
                             else if(m.memory[j-parameterAmmount][idx+findIndex(numberSolution,safeStringToFloat(actualSolution[j]))]==1){
@@ -275,16 +293,20 @@ public class Gauss {
                 System.out.println("jawaban");
                 printArrayNeatly(actualSolution);
                 System.out.println("\n");
+                float[] keluar = new float[1];
+                return keluar;
             }
         }
+        float[] keluar = new float[1];
+        return keluar;
         
     }
 
-    public static void main(String[] args){
-        Matrix m = new Matrix(3, 4);
-        Matrix.readMatrix(m,3,4);
-        Matrix b =makeSubMatrix(m, 1);
-        Matrix.displayMatrix(b);
-        gauss(m);
-    }
+    // public static void main(String[] args){
+    //     Matrix m = new Matrix(3, 4);
+    //     Matrix.readMatrix(m,3,4);
+    //     Matrix b =makeSubMatrix(m, 1);
+    //     Matrix.displayMatrix(b);
+    //     gauss(m);
+    // }
 }
