@@ -101,9 +101,6 @@ public class Gauss {
         return result;
     }
 
-    public static void makeEchelonHomo(){
-
-    }
 
 
     public static void makeEchelon(Matrix m){
@@ -115,7 +112,9 @@ public class Gauss {
             int idxRow =0;
             for(int k=i;k>=0;k--){
             //mengurangi row selanjutnya agar elemen paling kiri dari row selanjutnya hasilnya 0
-            Matrix.AddRowByRow(m,i+1, idxRow, (float)-1*(m.memory[i+1][firstNonZeroIdx(m, i+1)]));
+            if(m.memory[i+1][idxRow]!=0){
+                Matrix.AddRowByRow(m,i+1, idxRow, (float)-1*(m.memory[i+1][firstNonZeroIdx(m, i+1)]));
+            }
             idxRow++;
             }
         }  
