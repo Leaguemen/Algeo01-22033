@@ -85,7 +85,7 @@ public class Invers {
         }
 
         hasilInvers = Matrix.transpose(hasilInvers);
-        Matrix.multiplyByConst(hasilInvers, (float)1/Cofactor.cofactorDeterminant(m));
+        hasilInvers = Matrix.multiplyByConst(hasilInvers, (float)1/Cofactor.cofactorDeterminant(m));
 
         return hasilInvers;
     }
