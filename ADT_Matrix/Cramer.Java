@@ -23,7 +23,7 @@ public class Cramer {
             int last = Matrix.getLastIdxRow(m);
             for (i=0;i<=last;i++) {
                 float solution = Cofactor.cofactorDeterminant(replaceColumnWithConstant(m,i))/Cofactor.cofactorDeterminant(Matrix.coefficientMatrix(m));
-                System.out.print("x" + (i+1) + "=" + solution);
+                System.out.print("x" + (i+1) + " = " + solution);
                 if (i!=last) {
                     System.out.print(", ");
                 }

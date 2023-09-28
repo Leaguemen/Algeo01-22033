@@ -1,4 +1,5 @@
 import ADT_Matrix.*;
+import Regresi.*;
 
 public class driverTest {
         public static void main(String[] args) throws Exception{
@@ -30,8 +31,14 @@ public class driverTest {
         // Matrix.displayMatrix(m1);
 
         // Cobain Cramer
-        Matrix m = new Matrix(4,5);
-        Matrix.readMatrix(m,4,5);
-        Cramer.SPLCramer(m);
+        // Matrix m = new Matrix(4,5);
+        // Matrix.readMatrix(m,4,5);
+        // Cramer.SPLCramer(m);
+
+        // Cobain Regresi berganda
+        // Regresi.regresiBerganda();
+        Matrix m = new Matrix(3, 4);
+        Matrix.readMatrix(m, 3, 4);
+        Gauss.gauss(m);
     }
 }
