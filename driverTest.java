@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 import ADT_Matrix.*;
 
 public class driverTest {
@@ -35,8 +37,13 @@ public class driverTest {
         // Cramer.SPLCramer(m);
 
         // Coba BicubicSpline
-        Matrix m = new Matrix(4,4);
-        Matrix.readMatrix(m,4,4);
-        BicubicSpline.interpolation(m, (float) 0.5,(float) 0.5);   
+        // Scanner ins = new Scanner(System.in);
+        // Matrix m = new Matrix(4,4);
+        // Matrix.readMatrix(m,4,4);
+        // float targetX;
+        // targetX = ins.nextFloat();
+        // float targetY;
+        // targetY = ins.nextFloat();
+        BicubicSpline.interpolation();   
     }
 }
