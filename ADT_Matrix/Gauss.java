@@ -196,6 +196,7 @@ public class Gauss {
             makeEchelon(m);
             if(uniqueSolution(m)){
                 System.out.println("SOLUSI UNIK");
+                Matrix.displayMatrix(m);
                 float[] solutions = backwardSubstition(m);
                 for(int i=1;i<=m.rowEff;i++){
                     System.out.println(String.format("X%d = %f",i,solutions[i-1]));
@@ -209,19 +210,8 @@ public class Gauss {
             }
             else{
                 System.out.println("BANYAK SOLUSI");
+                GaussJordan.echelontoEchelonBaris(m);
                 String[] solutions= new String[m.colEff-1];
-                //Cek adakah unknow yang bisa langsung diketahui hasilnya
-                for(int i=0;i<m.rowEff;i++){
-                    int ctr =0;
-                    for(int j=0;j<m.colEff-1;j++){
-                        if(m.memory[i][j]!=0){
-                            ctr++;
-                        }
-                    }
-                    if(ctr == 1){
-                        solutions[i]= Float.toString((m.memory[i][m.colEff-1])/(m.memory[i][firstNonZeroIdx(m, i)]));
-                    }
-                }
                 //tentukan berapa parameter yang diperlukan
                 int parameterAmmount =0;
                 for(int i=0;i<m.rowEff;i++){
@@ -235,8 +225,7 @@ public class Gauss {
                         parameterAmmount++;
                     }
                 }
-                //System.out.println("Banyak parameter :"+ Integer.toString(parameterAmmount));
-                //set beberapa unknow as parameter dengan syarat jangan nimpa yang sudah diketahui
+                //set beberapa unknow as parameter
                 int parameterNumber = 1;
                 String parameterVariabel = "P";
                 int asciiChange = 0;
@@ -249,49 +238,36 @@ public class Gauss {
                     }
                     iterate++;
                 }
-                Matrix newMatrix = makeSubMatrix(m, parameterAmmount);
-                makeEchelon(newMatrix);
-                float[] numberSolution = backwardSubstition(newMatrix);
-                String[] actualSolution = new String[m.colEff-1];
-                //printArrayNeatly(actualSolution);
-                //System.out.println("\n");
-                //System.out.println("\n");
-                //populate actual solution
-                for(int i =0;i<actualSolution.length;i++){
-                    if(solutions[i]==null){
-                        actualSolution[i]= Float.toString(numberSolution[i-parameterAmmount]);
-                    }
-                    else{
-                        actualSolution[i]= solutions[i];
-                    }
-                }
-
-               //System.out.println("current matrix");
-               //Matrix.displayMatrix(m);
-               //System.out.println("");
-                for(int j = 0; j<actualSolution.length;j++){
-                    if(!containsString(solutions, actualSolution[j])){
-                        //System.out.println("idx yang masuk : "+ Integer.toString(j));
-                        int idx =0;
-                        //System.out.println("array parameter solutions : ");
-                        printArrayNeatly(solutions);
-                        //System.out.println("");
-                        while(solutions[idx] != null){
-                            if(m.memory[j-parameterAmmount][idx+findIndex(numberSolution,safeStringToFloat(actualSolution[j]))]>1){
-                                //System.out.println("Halo memori > 1");
-                                actualSolution[j] += "-" + Float.toString(m.memory[j-parameterAmmount][idx +findIndex(numberSolution,safeStringToFloat(actualSolution[j]))]) + solutions[idx];
+                System.out.println(parameterAmmount);
+                for(int i =0;i<m.rowEff-parameterAmmount;i++){
+                    for(int j =0;j<m.colEff-1;j++){
+                        if(m.memory[i][j] != 0 && solutions[j] ==null){
+                            if(m.memory[i][m.colEff-1] == 0){
+                                String holder = "(" ;           
+                                for(int k =0; k<m.colEff-1;k++){
+                                    if(m.memory[i][k]!= 0 && solutions[k]!= null){
+                                        holder+="-1" + solutions[k];
+                                    }
+                                }
+                                holder +=")";
+                                holder +="/"+ Float.toString(m.memory[i][j]);
+                                solutions[j] = holder;
                             }
-                            else if(m.memory[j-parameterAmmount][idx+findIndex(numberSolution,safeStringToFloat(actualSolution[j]))]==1){
-                                System.out.println("Halo memori == 1");
-                                actualSolution[j] += "-" + solutions[idx];
-                            } 
-                        idx++;                         
+                            else{
+                                String holder = "(" + Float.toString(m.memory[i][m.colEff-1]);
+                                for(int k =0; k<m.colEff-1;k++){
+                                    if(m.memory[i][k]!= 0 && solutions[k]!= null){
+                                        holder+="-1" + solutions[k];
+                                    }
+                                }
+                                holder +=")";
+                                holder +="/"+ Float.toString(m.memory[i][j]);
+                                solutions[j] = holder;
+                            }
                         }
                     }
                 }
-
-                System.out.println("jawaban");
-                printArrayNeatly(actualSolution);
+                Gauss.printArrayNeatly(solutions);
                 System.out.println("\n");
                 float[] keluar = new float[1];
                 return keluar;
@@ -299,14 +275,13 @@ public class Gauss {
         }
         float[] keluar = new float[1];
         return keluar;
-        
     }
 
-    // public static void main(String[] args){
-    //     Matrix m = new Matrix(3, 4);
-    //     Matrix.readMatrix(m,3,4);
-    //     Matrix b =makeSubMatrix(m, 1);
-    //     Matrix.displayMatrix(b);
-    //     gauss(m);
-    // }
+    public static void main(String[] args){
+        Matrix m = new Matrix(3, 4);
+        Matrix.readMatrix(m,3,4);
+        Matrix b =makeSubMatrix(m, 1);
+        Matrix.displayMatrix(b);
+        gauss(m);
+    }
 }

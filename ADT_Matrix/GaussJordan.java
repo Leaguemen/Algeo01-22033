@@ -70,7 +70,7 @@ public class GaussJordan {
                     }
                     iterate++;
                 }
-                System.out.println(parameterAmmount);
+                // System.out.println(parameterAmmount);
                 for(int i =0;i<m.rowEff-parameterAmmount;i++){
                     for(int j =0;j<m.colEff-1;j++){
                         if(m.memory[i][j] != 0 && solutions[j] ==null){
