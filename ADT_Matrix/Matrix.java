@@ -1,4 +1,5 @@
 package ADT_Matrix;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 public class Matrix {
     public final static int ROW_CAP = 100;

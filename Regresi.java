@@ -1,4 +1,4 @@
-package Regresi;
+
 import java.util.Scanner;
 
 import ADT_Matrix.*;

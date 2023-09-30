@@ -1,7 +1,9 @@
 import ADT_Matrix.*;
+import java.util.Scanner;
 
 public class BicubicSpline {
-    public static float interpolation (Matrix m, float targetX, float targetY) {
+    private static Scanner in = new Scanner(System.in);
+    public static void interpolation () {
         // KAMUS
         int i, j, x, y, result;
         Matrix mY = new Matrix(16,1);
@@ -9,6 +11,15 @@ public class BicubicSpline {
         Matrix ma = new Matrix(16,1);
 
         // ALGORITMA
+        // terima input
+        Matrix m = new Matrix(4,4);
+        Matrix.readMatrix(m,4,4);
+        float targetX = 0;
+        targetX = in.nextFloat();
+        float targetY = 0;
+        targetY = in.nextFloat();
+        // in.close();
+
         // ubah matrix m jadi column matriks mY
         for(i=0;i<16;i++) {
             for(j=0;j<4;j++) {
@@ -62,7 +73,7 @@ public class BicubicSpline {
         for(i=0;i<16;i++) {
             result += ma.memory[i][0] * (Math.pow(targetX,i%4) * Math.pow(targetY,i/4));
         }
-        System.out.println("Result: " + result);
-        return result;
+        System.out.println("f(" + targetX + "," + targetY + ")=" + result);
+        in.close();
     }
 }
