@@ -9,14 +9,17 @@ public class Interpolasi_Polinomial {
 
     public static Matrix titikInput(){
         System.out.print("Masukkan banyak titik : ");
-        int titikAmmount = Integer.parseInt(scanner.nextLine());
-        Matrix koleksiTitik = new Matrix(titikAmmount,2);
-        Matrix.readMatrix(koleksiTitik, titikAmmount,2);
+        float titikAmmount = Float.parseFloat(scanner.nextLine());
+        // return(new Matrix(0, 0));
+        Matrix koleksiTitik = new Matrix((int)titikAmmount,2);
+        Matrix.readMatrix(koleksiTitik, (int)titikAmmount,2);
         return(koleksiTitik);
     }
 
 
     public static float interpolasi_polinomial(){
+        System.out.print("Masukkan x yang ingin diuji : ");
+        float x = Float.parseFloat(scanner.nextLine());
         Matrix koleksiTitik = titikInput();
         Matrix augmented = new Matrix(koleksiTitik.rowEff, koleksiTitik.rowEff+1);
         //populate the last row
@@ -35,6 +38,7 @@ public class Interpolasi_Polinomial {
         for(int i=0;i<koefisien.length;i++){
             if(i ==0){
                 persamaan += " "+Float.toString(koefisien[i]) + " +";
+
             }
             else if(i==1){
                 persamaan += " "+Float.toString(koefisien[i]) + "X +";
@@ -47,7 +51,6 @@ public class Interpolasi_Polinomial {
             }   
         }
         System.out.println(persamaan);
-        float x = (float)9.2;
         float y=0;
         for(int j=0;j<koefisien.length;j++){
             y += koefisien[j]*(float) Math.pow((double)x,(double)j); 

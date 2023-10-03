@@ -56,14 +56,14 @@ public class Matrix {
 
 
     public static void readMatrix(Matrix m,int nRow, int nCol){
-        try(Scanner input = new Scanner(System.in)){
+        Scanner scanner = new Scanner(System.in);
             for(int i =0; i < m.rowEff;i++){
                 for(int j = 0; j< m.colEff;j++){
-                    m.memory[i][j] = input.nextFloat();
+                    m.memory[i][j] = scanner.nextFloat();
                 }
             }
+            scanner.close();
         }
-    }
 
 
 
