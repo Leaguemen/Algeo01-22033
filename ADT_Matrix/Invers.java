@@ -54,6 +54,7 @@ public class Invers {
                         Matrix.Swap(m, i, j, n);
                         Matrix.Swap(hasilInvers, i, j, n);
                     }
+                    j++;
                 }
             }
 
