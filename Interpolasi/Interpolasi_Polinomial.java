@@ -17,10 +17,7 @@ public class Interpolasi_Polinomial {
     }
 
 
-    public static float interpolasi_polinomial(){
-        System.out.print("Masukkan x yang ingin diuji : ");
-        float x = Float.parseFloat(scanner.nextLine());
-        Matrix koleksiTitik = titikInput();
+    public static float interpolasi_polinomial(int x,Matrix koleksiTitik){
         Matrix augmented = new Matrix(koleksiTitik.rowEff, koleksiTitik.rowEff+1);
         //populate the last row
         for(int i=0;i<augmented.rowEff;i++){
@@ -59,8 +56,8 @@ public class Interpolasi_Polinomial {
         return(y);
     }
 
-     public static void main(String[] args){
-        interpolasi_polinomial();
-        scanner.close();
-     }
+    //  public static void main(String[] args){
+    //     interpolasi_polinomial();
+    //     scanner.close();
+    //  }
 }
