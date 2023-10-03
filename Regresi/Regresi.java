@@ -56,20 +56,38 @@ public class Regresi {
         return hasil;
     }
 
-    public static void regresiBerganda () {
-        try (Scanner input = new Scanner(System.in)) {
-            System.out.print("Masukkan jumlah peubah (n): ");
-            int n = input.nextInt();
-            System.out.print("Masukkan jumlah sampel (m): ");
-            int m = input.nextInt();
-            Matrix mat = readPoint(n, m);
-            // System.out.print("Masukkan nilai x yang akan diestimasi: ");
-            // float x = input.nextFloat();
+    public static float[] regresiBerganda (int n ,int m) {
+        Matrix mat = readPoint(n, m);
+        Matrix hasil = normalEstimationEquation(mat);
             
-            Matrix hasil = normalEstimationEquation(mat);
-            Matrix.displayMatrix(hasil);
-            Gauss.gauss(hasil);
-            
+        float[] b = Gauss.gauss(hasil);
+        return b;
+    }
+
+    public static void tampilPersamaan (float[] b, int peubah) {
+        // Menampilkan persamaan
+        System.out.print("f(x) = (" + b[0] + ") + ");
+        for (int i = 1; i <= peubah; i++) {
+            System.out.print("(" + b[i] +")"+ "x" + i + " ");
+            if (i != peubah) {
+                System.out.print("+ ");
+            }
         }
-    } 
+        System.out.println("");
+    }
+
+    public static void hitungPersamaan (float[] b, int peubah) {
+        Scanner in = new Scanner(System.in);
+        float result = b[0];
+        int i = 0;
+        while (i <= peubah) {
+            System.out.println("Masukkan peubah ke-" + (i+1));
+            Float x = in.nextFloat();
+            result += x*b[i];
+            i++;
+        }
+        in.close();
+
+        System.out.println("f(xk) = " + result);
+    }
 }

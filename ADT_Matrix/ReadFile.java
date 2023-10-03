@@ -29,6 +29,7 @@ public class ReadFile {
                 } else {
                     System.out.println("Folder tidak ditemukan.");
                 }
+                inp.close();
             } else if (pilihan == 2) { 
                 Scanner input = new Scanner(System.in);
                 String currentDirectory = System.getProperty("user.dir");
@@ -44,9 +45,11 @@ public class ReadFile {
                 if (pilihFolder) {
                     System.out.println("File tidak ditemukan.");
                 }
+                input.close();
             } else {
                 System.out.println("Tidak ada pilihan tersebut");
             }
+            in.close();
         }
         return namaFile;
     }

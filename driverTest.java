@@ -1,7 +1,10 @@
+import java.util.Scanner;
+
 import ADT_Matrix.*;
+import Regresi.Regresi;
 
 public class driverTest {
-        public static void main(String[] args) throws Exception{
+        public static void main(String[] args) {
         // Matrix m = new Matrix(3, 3);
         // Matrix.readMatrix(m,3,3);
         // Matrix.displayMatrix(m);
@@ -30,8 +33,24 @@ public class driverTest {
         // Matrix.displayMatrix(m1);
 
         // Cobain Cramer
-        Matrix m = new Matrix(4,5);
-        Matrix.readMatrix(m,4,5);
-        Cramer.SPLCramer(m);
+        // Matrix m = new Matrix(4,5);
+        // Matrix.readMatrix(m,4,5);
+        // Cramer.SPLCramer(m);
+
+        // Cobain regresi
+        Scanner baca = new Scanner(System.in);
+        System.out.println("Masukkan n");
+        int n = baca.nextInt();
+        System.out.println("Masukkan m");
+        int m = baca.nextInt();
+        
+        float[] konstanta = Regresi.regresiBerganda(n,m);
+        Regresi.tampilPersamaan(konstanta, n);
+        Regresi.hitungPersamaan(konstanta, n);
+        baca.close();
+        // invers
+        // Matrix m = new Matrix(4, 4);
+        // Matrix.readMatrix(m, 4, 4);
+        // Matrix.displayMatrix(Invers.InverseWithCofactor(m));
     }
 }
