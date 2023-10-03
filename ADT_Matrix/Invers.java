@@ -108,7 +108,7 @@ public class Invers {
                 System.out.println("Tidak ada pilihan tersebut");
             }
         }
-        
+        in.close();
         Matrix solusi = Matrix.multiplyMatrix(Ainvers, b);
         
         for (i = 1; i <= solusi.rowEff; i++) {
