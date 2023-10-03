@@ -54,13 +54,14 @@ public class Interpolasi_Polinomial {
         float y=0;
         for(int j=0;j<koefisien.length;j++){
             y += koefisien[j]*(float) Math.pow((double)x,(double)j); 
-        }              
+        }
+        System.out.print("Jawabannya adalah : ");              
         System.out.println(y);
         return(y);
     }
 
-     public static void main(String[] args){
-        interpolasi_polinomial();
-        scanner.close();
-     }
+    //  public static void main(String[] args){
+    //     interpolasi_polinomial();
+    //     scanner.close();
+    //  }
 }

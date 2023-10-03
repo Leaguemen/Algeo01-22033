@@ -8,7 +8,7 @@ public class reduksiBaris{
             // membuat yg atas elemen kiri atas menjadi leading one
             result *= m.memory[i][Gauss.firstNonZeroIdx(m, i)];
             Matrix.MultiplyRow(m, i, 1/m.memory[i][Gauss.firstNonZeroIdx(m, i)]);
-            System.out.println(i);
+            // System.out.println(i);
             if(i != m.rowEff-1){
                 int idxRow =0;
                 for(int k=i;k>=0;k--){
@@ -17,11 +17,11 @@ public class reduksiBaris{
                     Matrix.AddRowByRow(m,i+1, idxRow, (float)-1*(m.memory[i+1][Gauss.firstNonZeroIdx(m, i+1)]));
                 }
                 idxRow++;
-                Matrix.displayMatrix(m);
-                System.out.println("\n");
+                // Matrix.displayMatrix(m);
+                // System.out.println("\n");
                 }
             } 
-            System.out.println("\n");
+            // System.out.println("\n");
         }
         
         int dummy=0;
