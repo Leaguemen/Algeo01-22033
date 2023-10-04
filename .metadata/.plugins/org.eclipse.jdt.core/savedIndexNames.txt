@@ -1,0 +1,1 @@
+INDEX VERSION 1.134+C:\Users\Sean Nugroho\Documents\Semester3\Algeo\Tubes1\Tubes_Algeo_Matrix_OSC\.metadata\.plugins\org.eclipse.jdt.core

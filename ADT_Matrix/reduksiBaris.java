@@ -36,10 +36,10 @@ public class reduksiBaris{
         return(result);
     }
 
-    // public static void main(String[] args){
-    //     Matrix m = new Matrix(3, 3);
-    //     Matrix.readMatrix(m,3,3);
-    //     System.out.println(getDeterminant(m));
-    // }
+    public static void main(String[] args){
+        Matrix m = new Matrix(3, 3);
+        Matrix.readMatrix(m,3,3);
+        System.out.println(getDeterminant(m));
+    }
     
 }
