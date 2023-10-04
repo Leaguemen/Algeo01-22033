@@ -277,11 +277,108 @@ public class Gauss {
         return keluar;
     }
 
-    public static void main(String[] args){
-        Matrix m = new Matrix(3, 4);
-        Matrix.readMatrix(m,3,4);
-        Matrix b =makeSubMatrix(m, 1);
-        Matrix.displayMatrix(b);
-        gauss(m);
+    public static String gaussString(Matrix m){
+        int flagAllZero = 0;
+        for(int i =0; i<m.rowEff;i++){
+            if(m.memory[i][0]==0){
+                flagAllZero+=1;
+            }
+        }
+        //System.out.println(flagAllZero);
+        if(flagAllZero<m.rowEff){
+            makeEchelon(m);
+            if(uniqueSolution(m)){
+                System.out.println("SOLUSI UNIK");
+                Matrix.displayMatrix(m);
+                float[] solutions = backwardSubstition(m);
+                String solutionString ="";
+                for(int i=1;i<=m.rowEff;i++){
+                    System.out.println(String.format("X%d = %f",i,solutions[i-1]));
+                }
+                for(int i =0; i< m.rowEff;i++){
+                    solutionString += "x" + (i+1) + " = " + Float.toString(solutions[i]) + "\n";
+                }
+                return solutionString;
+            }
+            else if(noSolution(m)){
+                System.out.println("TIDAK ADA SOLUSI");
+                return "TIDAK ADA SOLUSI";
+            }
+            else{
+                System.out.println("BANYAK SOLUSI");
+                GaussJordan.echelontoEchelonBaris(m);
+                String[] solutions= new String[m.colEff-1];
+                //tentukan berapa parameter yang diperlukan
+                int parameterAmmount =0;
+                for(int i=0;i<m.rowEff;i++){
+                    int ctr =0;
+                    for(int j=0;j<m.colEff;j++){
+                        if(m.memory[i][j]==0){
+                            ctr++;
+                        }
+                    }
+                    if(ctr == m.colEff){
+                        parameterAmmount++;
+                    }
+                }
+                //set beberapa unknow as parameter
+                int parameterNumber = 1;
+                String parameterVariabel = "P";
+                int asciiChange = 0;
+                int iterate =0;
+                while(asciiChange<parameterAmmount){
+                    if(solutions[iterate]==null){
+                        solutions[iterate] = parameterVariabel + Integer.toString(parameterNumber);
+                        parameterNumber++;
+                        asciiChange++;
+                    }
+                    iterate++;
+                }
+                System.out.println(parameterAmmount);
+                for(int i =0;i<m.rowEff-parameterAmmount;i++){
+                    for(int j =0;j<m.colEff-1;j++){
+                        if(m.memory[i][j] != 0 && solutions[j] ==null){
+                            if(m.memory[i][m.colEff-1] == 0){
+                                String holder = "(" ;           
+                                for(int k =0; k<m.colEff-1;k++){
+                                    if(m.memory[i][k]!= 0 && solutions[k]!= null){
+                                        holder+="-1" + solutions[k];
+                                    }
+                                }
+                                holder +=")";
+                                holder +="/"+ Float.toString(m.memory[i][j]);
+                                solutions[j] = holder;
+                            }
+                            else{
+                                String holder = "(" + Float.toString(m.memory[i][m.colEff-1]);
+                                for(int k =0; k<m.colEff-1;k++){
+                                    if(m.memory[i][k]!= 0 && solutions[k]!= null){
+                                        holder+="-1" + solutions[k];
+                                    }
+                                }
+                                holder +=")";
+                                holder +="/"+ Float.toString(m.memory[i][j]);
+                                solutions[j] = holder;
+                            }
+                        }
+                    }
+                }
+                Gauss.printArrayNeatly(solutions);
+                String solutionString ="";
+                for(int i =0; i< m.rowEff;i++){
+                    solutionString += "x" + (i+1) + " = " + solutions[i] + "\n";
+                }
+                System.out.println("\n");
+                return solutionString;
+            }
+        }
+        return "";
     }
+    // public static void main(String[] args){
+    //     Matrix m = new Matrix(3, 4);
+    //     Matrix.readMatrix(m,3,4);
+    //     Matrix b =makeSubMatrix(m, 1);
+    //     Matrix.displayMatrix(b);
+    //     gauss(m);
+    // }
 }
