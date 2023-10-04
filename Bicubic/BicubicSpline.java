@@ -4,8 +4,12 @@ import java.util.Scanner;
 
 public class BicubicSpline {
     private static Scanner in = new Scanner(System.in);
-    public static void interpolation (Matrix m, float targetX, float targetY) {
+    public static void interpolation () {
         // KAMUS
+        Matrix m = new Matrix(4,4);
+        Matrix.readMatrix(m,4,4);
+        float targetX = in.nextFloat();
+        float targetY = in.nextFloat();
         int i, j, x, y;
         float result;
         Matrix mY = new Matrix(16,1);

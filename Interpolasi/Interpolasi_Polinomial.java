@@ -8,7 +8,7 @@ public class Interpolasi_Polinomial {
     private static Scanner scanner = new Scanner(System.in);
 
     public static Matrix titikInput(){
-        System.out.print("Masukkan banyak titik : ");
+        System.out.print("Masukkan banyak titik: ");
         float titikAmmount = Float.parseFloat(scanner.nextLine());
         // return(new Matrix(0, 0));
         Matrix koleksiTitik = new Matrix((int)titikAmmount,2);
@@ -17,7 +17,10 @@ public class Interpolasi_Polinomial {
     }
 
 
-    public static float interpolasi_polinomial(int x,Matrix koleksiTitik){
+    public static float interpolasiPolinomial(){
+        System.out.print("Masukkan x yang ingin diuji: ");
+        float x = Float.parseFloat(scanner.nextLine());
+        Matrix koleksiTitik = titikInput();
         Matrix augmented = new Matrix(koleksiTitik.rowEff, koleksiTitik.rowEff+1);
         //populate the last row
         for(int i=0;i<augmented.rowEff;i++){
@@ -51,7 +54,8 @@ public class Interpolasi_Polinomial {
         float y=0;
         for(int j=0;j<koefisien.length;j++){
             y += koefisien[j]*(float) Math.pow((double)x,(double)j); 
-        }              
+        }
+        System.out.print("Jawabannya adalah: ");              
         System.out.println(y);
         return(y);
     }

@@ -37,11 +37,13 @@ public class driverTest {
         // Cramer.SPLCramer(m);
 
         // Coba BicubicSpline
-        Scanner in = new Scanner(System.in);
-        float targetX = in.nextFloat();
-        float targetY = in.nextFloat();
+        // Scanner in = new Scanner(System.in);
+        // float targetX = in.nextFloat();
+        // float targetY = in.nextFloat();
         Matrix m = new Matrix(4,4);
         Matrix.readMatrix(m,4,4);
-        BicubicSpline.interpolation(m, targetX, targetY);
+        float y = reduksiBaris.getDeterminant(m);
+        System.out.println(y);
+        BicubicSpline.interpolation();
     }
 }

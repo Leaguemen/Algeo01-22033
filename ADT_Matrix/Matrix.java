@@ -63,7 +63,7 @@ public class Matrix {
                     m.memory[i][j] = scanner.nextFloat();
                 }
             }
-            scanner.close();
+            // scanner.close();
         }
 
 

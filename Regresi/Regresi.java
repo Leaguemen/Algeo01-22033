@@ -1,5 +1,6 @@
 package Regresi;
 import ADT_Matrix.*;
+import java.util.Scanner;
 
 public class Regresi {
 
@@ -54,10 +55,9 @@ public class Regresi {
         return hasil;
     }
 
-    public static Matrix regresiBerganda (int n, int m) {
+    public static Matrix prosesRegresiBerganda (int n, int m) {
         Matrix mat = readPoint(n, m);
         Matrix hasil = normalEstimationEquation(mat);
-        Matrix.displayMatrix(hasil);
         
         return hasil;
     }
@@ -91,5 +91,27 @@ public class Regresi {
         String tampil = "f(xk) = " + result;
         return tampil;
     }
+
+    public static String regresiBerganda() {
+        Scanner in = new Scanner(System.in);
+        System.out.print("Masukkan jumlah peubah (n): ");
+        int n = in.nextInt();
+        System.out.print("Masukkan jumlah data (m): ");
+        int m = in.nextInt();
+        Matrix matrixM = Regresi.prosesRegresiBerganda(n, m);
+        float[] solusi = Regresi.ambilHasil(matrixM);
+        System.out.println("Masukkan nilai yang akan diestemasi");
+        float[] peubah = new float[n];
+        int i;
+        for (i=0;i<n;i++) {
+            peubah[i] = in.nextFloat();
+        }
+        float result = Regresi.hitungNilai(solusi, peubah, n);
+        String tampil = Regresi.tampilHasil(solusi);
+        System.out.println(tampil);
+        String tampil1 = Regresi.tampilHitungNilai(result);
+        System.out.println(result);
+        return tampil + "\n" + tampil1;
+}
 
 }
