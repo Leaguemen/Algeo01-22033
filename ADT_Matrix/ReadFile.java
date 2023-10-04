@@ -5,49 +5,40 @@ import java.util.*;
 
 
 public class ReadFile {
+
+    public static int countLine (String namaFile) throws Exception{
+        File file = new File(namaFile);
+        int n = 0;
+        BufferedReader br = new BufferedReader(new FileReader(file));
+
+        while (br.readLine() != null) {
+            n++;
+        }
+        br.close();
+        return n;
+    }
     
     public static String pilihFile (String namaFile) {
         /* I.S : namaFile sembarang */
         /* F.S : namaFile terdefinisi */
-        boolean pilihFolder = true;
-        int pilihan;
-        String folder;
+        boolean isFileExist = false;
+        Scanner in = new Scanner (System.in);
+        while (!isFileExist) {
+            System.out.print("Masukkan nama file : ");
+            namaFile = in.nextLine();
+            String currentDirectory = System.getProperty("user.dir");
+            File directory = new File(currentDirectory);
 
-        while (pilihFolder) {
-            Scanner in = new Scanner(System.in);
-            System.out.println("Memasukkan nama folder atau file? (Masukkan angka)\n1. Folder\n2. File");
-            pilihan = in.nextInt();
-            
-            if (pilihan == 1) {
-                Scanner inp = new Scanner(System.in);
-                System.out.print("Masukkan nama folder: ");
-                folder = inp.nextLine();
-                File f = new File(folder);
-
-                if (f.exists() && f.isDirectory()) {
-                    System.setProperty("user.dir", folder);
-                } else {
-                    System.out.println("Folder tidak ditemukan.");
+            for (File file : directory.listFiles()) {
+                if (file.isFile() && file.getName().equals(namaFile)) {
+                    isFileExist = true;
                 }
-            } else if (pilihan == 2) { 
-                Scanner input = new Scanner(System.in);
-                String currentDirectory = System.getProperty("user.dir");
-                File directory = new File(currentDirectory);
-                System.out.print("Masukkan nama file: ");
-                namaFile = input.nextLine();
-                for (File file : directory.listFiles()) {
-                    if (file.isFile() && file.getName().equals(namaFile)) {
-                        pilihFolder = false;
-                    }
-                }
-                
-                if (pilihFolder) {
-                    System.out.println("File tidak ditemukan.");
-                }
-            } else {
-                System.out.println("Tidak ada pilihan tersebut");
+            }
+            if (!isFileExist) {
+                System.out.println("File tidak ditemukan.");
             }
         }
+        in.close();
         return namaFile;
     }
 
@@ -85,88 +76,69 @@ public class ReadFile {
         return m;
     }
 
-    public static void readBicubicFile (String namaFile, Matrix m) throws Exception {
+    public static Matrix readMatrixFromFile (String namaFile) throws Exception {
         File file = new File(namaFile);
-        int i = 0;
-        int j; int k;
-        String line;
-        String temp;
         BufferedReader br = new BufferedReader(new FileReader(file));
+        String line;
+        String temp = "";
+        int lineLenght = countLine(namaFile);
+        Matrix m = new Matrix(lineLenght-1, 0);
+        int i;
+        int j;
 
-        while ((line = br.readLine()) != null) {
+        for (i = 0; i < m.rowEff; i++) {
             temp = "";
-            k = 0;
-            if (i < 4) {
-                for (j = 0; j < line.length(); j++) {
-                    if (line.charAt(j) != ' ') {
-                        temp += line.charAt(j);
-                    } else {
-                        m.memory[i][k] = Float.parseFloat(temp);
-                        temp = "";
-                        k++;
-                    }
-
-                    if (j == (line.length()-1)) {
-                        m.memory[i][k] = Float.parseFloat(temp);
-                        temp = "";
-                        k++;
-                    }
+            line = br.readLine();
+            int k = 0;
+            for (j = 0; j < line.length(); j++) {
+                if (line.charAt(j) != ' ') {
+                    temp += line.charAt(j);
+                } else {
+                    m.memory[i][k] = Float.parseFloat(temp);
+                    temp = "";
+                    k++;
                 }
-                i++;
+
+                if (j == (line.length()-1)) {
+                    m.memory[i][k] = Float.parseFloat(temp);
+                    temp = "";
+                    k++;
+                }
+            m.colEff = k;
             }
         }
+        br.close();
+        return m;
     }
 
-    public static Float readX (String namaFile) throws Exception {
+    public static Float[] readBottomLine (String namaFile) throws Exception{
         File file = new File(namaFile);
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line;
         String temp = "";
-        float x = 0;
-        int i = 0; int j;
-        
-        while ((line = br.readLine()) != null) {
-            if (i == 4) {
-                for (j = 0; j < line.length()-1; j++) {
-                    if (line.charAt(j) != ' ') {
-                        temp += line.charAt(j);
-                    } else {
-                        x = Float.parseFloat(temp);
-                        break;
-                    }
-                }
-            }
-            i++;
-        }
+        int lineLenght = countLine(namaFile);
+        int i; int j; int k =0;
+        Float array[] = new Float[10];
 
-        return x;
-    }
-
-    public static Float readY (String namaFile) throws Exception {
-        File file = new File(namaFile);
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        String line;
-        String temp = "";
-        float y = 0;
-        int i = 0; int j;
-
-        while ((line = br.readLine()) != null) {
-            if (i == 4) {
+        for (i = 0; i < lineLenght; i++) {
+            line = br.readLine();
+            if (i == lineLenght-1) {
                 for (j = 0; j < line.length(); j++) {
                     if (line.charAt(j) != ' ') {
                         temp += line.charAt(j);
                     } else {
+                        array[k] = Float.parseFloat(temp);
                         temp = "";
+                        k++;
                     }
 
                     if (j == line.length()-1) {
-                        y = Float.parseFloat(temp);
+                        array[k] = Float.parseFloat(temp);
                     }
                 }
             }
-            i++;
         }
-
-        return y;
+        br.close();
+        return array;
     }
 }

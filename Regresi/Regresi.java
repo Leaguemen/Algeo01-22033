@@ -1,6 +1,4 @@
-
-import java.util.Scanner;
-
+package Regresi;
 import ADT_Matrix.*;
 
 public class Regresi {
@@ -56,38 +54,42 @@ public class Regresi {
         return hasil;
     }
 
-    public static float[] regresiBerganda (int n ,int m) {
+    public static Matrix regresiBerganda (int n, int m) {
         Matrix mat = readPoint(n, m);
         Matrix hasil = normalEstimationEquation(mat);
-            
-        float[] b = Gauss.gauss(hasil);
-        return b;
+        Matrix.displayMatrix(hasil);
+        
+        return hasil;
     }
 
-    public static void tampilPersamaan (float[] b, int peubah) {
-        // Menampilkan persamaan
-        System.out.print("f(x) = (" + b[0] + ") + ");
-        for (int i = 1; i <= peubah; i++) {
-            System.out.print("(" + b[i] +")"+ "x" + i + " ");
-            if (i != peubah) {
-                System.out.print("+ ");
+    public static float[] ambilHasil (Matrix hasil) {
+        float[] solusi = Gauss.gauss(hasil);
+        return solusi; 
+    }
+
+    public static float hitungNilai(float[] solusi, float[] peubah, int n) {
+        float result = 0;
+        for (int i = 0; i < n; i++) {
+            result += (solusi[i]*peubah[i]);
+        }
+        return result;
+    }
+
+    public static String tampilHasil (float[] solusi) {
+        String tampil = "f(x) = " + solusi[0] + " + ";
+        for (int i = 1; i < solusi.length; i++) {
+            String temp = "x" + (i) + "(" + (solusi[i]) + ") ";
+            if (i < solusi.length-1) {
+                temp += "+ ";
             }
+            tampil += temp;
         }
-        System.out.println("");
+        return tampil;
     }
 
-    public static void hitungPersamaan (float[] b, int peubah) {
-        Scanner in = new Scanner(System.in);
-        float result = b[0];
-        int i = 0;
-        while (i <= peubah) {
-            System.out.println("Masukkan peubah ke-" + (i+1));
-            Float x = in.nextFloat();
-            result += x*b[i];
-            i++;
-        }
-        in.close();
-
-        System.out.println("f(xk) = " + result);
+    public static String tampilHitungNilai(float result) {
+        String tampil = "f(xk) = " + result;
+        return tampil;
     }
+
 }
