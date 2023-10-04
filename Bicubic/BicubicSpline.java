@@ -1,30 +1,24 @@
+package Bicubic;
 import ADT_Matrix.*;
 import java.util.Scanner;
 
 public class BicubicSpline {
     private static Scanner in = new Scanner(System.in);
-    public static void interpolation () {
+    public static void interpolation (Matrix m, float targetX, float targetY) {
         // KAMUS
-        int i, j, x, y, result;
+        int i, j, x, y;
+        float result;
         Matrix mY = new Matrix(16,1);
         Matrix mX = new Matrix(16,16);
         Matrix ma = new Matrix(16,1);
 
         // ALGORITMA
         // terima input
-        Matrix m = new Matrix(4,4);
-        Matrix.readMatrix(m,4,4);
-        float targetX = 0;
-        targetX = in.nextFloat();
-        float targetY = 0;
-        targetY = in.nextFloat();
         // in.close();
 
         // ubah matrix m jadi column matriks mY
         for(i=0;i<16;i++) {
-            for(j=0;j<4;j++) {
-                mY.memory[i][0] = m.memory[i % 4][j];
-            }
+            mY.memory[i][0] = m.memory[i / 4][i % 4];
         }
 
         // isi matrix mX
@@ -68,12 +62,20 @@ public class BicubicSpline {
         // temukan matriks ma
         Matrix inversemX = Invers.InverseWithGaussJordan(mX);
         ma = Matrix.multiplyMatrix(inversemX,mY);
-
+        // System.out.println("Ini my");
+        // Matrix.displayMatrix(mY);
+        // System.out.println(targetX);
+        // System.out.println("ini ma");
+        // Matrix.displayMatrix(ma);
+        // System.out.println("ini result");
         result = 0;
         for(i=0;i<16;i++) {
-            result += ma.memory[i][0] * (Math.pow(targetX,i%4) * Math.pow(targetY,i/4));
+            result += (ma.memory[i][0] * (Math.pow(targetX,i%4) * Math.pow(targetY,i/4)));
+            // System.out.print("ITERASI KE-");
+            // System.out.println(i);
+            // System.out.print(Math.pow(targetX,i%4) + " " + Math.pow(targetY,i/4) + "\n");
+            // System.out.println(result);
         }
         System.out.println("f(" + targetX + "," + targetY + ")=" + result);
-        in.close();
     }
 }
