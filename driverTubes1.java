@@ -8,10 +8,10 @@ public class driverTubes1 {
     private static Scanner sc = new Scanner(System.in);
 
     public static Matrix inputSPLMatrix() {
-        System.out.println("Masukkan ukuran matriks (m n): ");
+        System.out.println("\nMasukkan ukuran matriks (m n): ");
         int m = sc.nextInt();
         int n = sc.nextInt();
-        System.out.println("Masukkan matriks augmented dengan ukuran m * (n + 1): ");
+        System.out.println("Masukkan matriks augmented dengan ukuran " + m + " * " + (n + 1) + ": ");
         Matrix mAug = new Matrix(n, n + 1);
         Matrix.readMatrix(mAug, m, n + 1);
         if (m != n) {
@@ -57,11 +57,11 @@ public class driverTubes1 {
                     if (chosen1 == 1) {
                         System.out.println("---------------METODE ELIMINASI GAUSS---------------");
                         Matrix mAug = inputSPLMatrix();
-                        solution = Gauss.gauss(mAug); // solusi sudah diprint oleh function
+                        solution = Gauss.gauss(mAug);
                     } else if (chosen1 == 2) {
                         System.out.println("---------------METODE ELIMINASI GAUSS-JORDAN---------------");
                         Matrix mAug = inputSPLMatrix();
-                        solution = GaussJordan.SPLGaussJordan(mAug); // solusi sudah diprint oleh function
+                        solution = GaussJordan.SPLGaussJordan(mAug);
                     } else if (chosen1 == 3) {
                         System.out.println("----------------METODE MATRIKS BALIKAN---------------");
                         System.out.println("Pilih metode invers:\n1. Invers dengan matriks identitas\n2. Invers dengan ekspansi kofaktor");
@@ -85,6 +85,7 @@ public class driverTubes1 {
                     // Memberi opsi simpan ke file
                     if (detNotZero) {
                         int i;
+                        System.out.println();
                         for (i = 0; i < solution.length; i++) {
                             System.out.print("x" + (i +1) + "=");
                             System.out.print(solution[i]);
@@ -100,9 +101,7 @@ public class driverTubes1 {
                         char confirmation = sc.next().charAt(0);
                         if (confirmation == 'Y') {
                             System.out.print("Masukkan nama file (tanpa \".txt\"): ");
-                            System.out.println("ayam1");
-                            String filename = sc.nextLine();
-                            System.out.println("ayam2");
+                            String filename = sc.next();
                             String stringSolution = WriteToFile.ArrayofStringtoString(solution);
                             WriteToFile.writeFile(stringSolution, filename);
                         }
@@ -118,25 +117,38 @@ public class driverTubes1 {
 
                 int chosen2 = sc.nextInt();
                 System.out.println();
+                if (chosen2 == 1 || chosen2 == 2) {
+                    float det = 0;
+                    if (chosen2 == 1) {
+                        System.out.print("---------------METODE REDUKSI BARIS---------------"
+                                            + "\nMasukkan ukuran matriks persegi (n): ");
+                        int n = sc.nextInt();
+                        Matrix m = new Matrix(n,n);
+                        System.out.println("Masukkan matriks:");
+                        Matrix.readMatrix(m, n, n);
+                        det = reduksiBaris.getDeterminant(m);
+                        System.out.println("\nDeterminan: " + det);
+                    } else if (chosen2 == 2) {
+                        System.out.print("---------------METODE KOFAKTOR---------------"
+                                            + "\nMasukkan ukuran matriks persegi (n): ");
+                        int n = sc.nextInt();
+                        Matrix m = new Matrix(n,n);
+                        System.out.println("Masukkan matriks:");
+                        Matrix.readMatrix(m, n, n);
+                        det = Cofactor.cofactorDeterminant(m);
+                        System.out.println("\nDeterminan: " + det);
+                    }
 
-                if (chosen2 == 1) {
-                    System.out.print("---------------METODE REDUKSI BARIS---------------"
-                                        + "\nMasukkan ukuran matriks persegi (n): ");
-                    int n = sc.nextInt();
-                    Matrix m = new Matrix(n,n);
-                    System.out.println("Masukkan matriks:");
-                    Matrix.readMatrix(m, n, n);
-                    float det = reduksiBaris.getDeterminant(m);
-                    System.out.println("Determinan: " + det);
-                } else if (chosen2 == 2) {
-                    System.out.print("---------------METODE KOFAKTOR---------------"
-                                        + "\nMasukkan ukuran matriks persegi (n): ");
-                    int n = sc.nextInt();
-                    Matrix m = new Matrix(n,n);
-                    System.out.println("Masukkan matriks:");
-                    Matrix.readMatrix(m, n, n);
-                    float det = Cofactor.cofactorDeterminant(m);
-                    System.out.println("Determinan: " + det);
+                    // simpan hasil
+                    System.out.println();
+
+                    System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                    char confirmation = sc.next().charAt(0);
+                    if (confirmation == 'Y') {
+                        System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                        String filename = sc.next();
+                        WriteToFile.writeFile(Float.toString(det), filename);
+                    }
                 } else {
                     System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
@@ -148,44 +160,86 @@ public class driverTubes1 {
                                     
                 int chosen3 = sc.nextInt();
                 System.out.println();
+                if (chosen3 == 1 || chosen3 == 2) {
+                    // input di sini, nanti mNew inisialisasi dengan ukuran sesuai input
+                    Matrix mNew;
+                    if (chosen3 == 1) {
+                        System.out.println("---------------METODE GAUSS-JORDAN---------------"
+                                                + "\nMasukkan ukuran matriks persegi (n): ");
+                        int n = sc.nextInt();
+                        Matrix m = new Matrix(n,n);
+                        System.out.println("Masukkan matriks:");
+                        Matrix.readMatrix(m,n,n);
+                        mNew = Invers.InverseWithGaussJordan(m);
+                        if (mNew.rowEff != 0) {
+                            System.out.println("Matriks hasil invers: ");
+                            Matrix.displayMatrix(mNew);
+                        } else {
+                            System.out.println("Matriks singular");
+                        }
+                    } else if (chosen3 == 2) {
+                        System.out.println("---------------METODE MATRIKS ADJOIN---------------"
+                                                + "\nMasukkan ukuran matriks persegi(n): ");
+                        int n = sc.nextInt();
+                        Matrix m = new Matrix(n,n);
+                        System.out.println("Masukkan matriks");
+                        Matrix.readMatrix(m, n, n);
+                        mNew = Invers.InverseWithCofactor(m);
+                        if (mNew.rowEff != 0) {
+                            System.out.println("Matriks hasil invers: ");
+                            Matrix.displayMatrix(mNew);
+                        } else {
+                            System.out.println("Matriks singular");
+                        }
+                    }
 
-                if (chosen3 == 1) {
-                    System.out.println("---------------METODE GAUSS-JORDAN---------------"
-                                            + "\nMasukkan ukuran matriks persegi (n): ");
-                    int n = sc.nextInt();
-                    Matrix m = new Matrix(n,n);
-                    System.out.println("Masukkan matriks:");
-                    Matrix.readMatrix(m,n,n);
-                    Matrix mNew = Invers.InverseWithGaussJordan(m);
-                    if (mNew.rowEff != 0) {
-                        System.out.println("Matriks hasil invers: ");
-                        Matrix.displayMatrix(mNew);
-                    } else {
-                        System.out.println("Matriks singular");
-                    }
-                } else if (chosen3 == 2) {
-                    System.out.println("---------------METODE MATRIKS ADJOIN---------------"
-                                            + "\nMasukkan ukuran matriks persegi(n): ");
-                    int n = sc.nextInt();
-                    Matrix m = new Matrix(n,n);
-                    System.out.println("Masukkan matriks");
-                    Matrix.readMatrix(m, n, n);
-                    Matrix mNew = Invers.InverseWithCofactor(m);
-                    if (mNew.rowEff != 0) {
-                        System.out.println("Matriks hasil invers; ");
-                        Matrix.displayMatrix(mNew);
-                    } else {
-                        System.out.println("Matriks singular");
-                    }
+                    // JANGAN DIHAPUS!
+                    // System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                    // char confirmation = sc.next().charAt(0);
+                    // if (confirmation == 'Y') {
+                    //     System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                    //     String filename = sc.next();
+                    //     String stringSolution = WriteToFile.MatrixtoString(mNew);
+                    //     WriteToFile.writeFile(stringSolution, filename);
+                    // }
                 } else {
                     System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 4) {
-                Interpolasi_Polinomial.interpolasiPolinomial();
+                System.out.println("---------------INTERPOLASI POLINOMIAL---------------\n");
+                float y = Interpolasi_Polinomial.interpolasiPolinomial();
+
+                // penyimpanan jawaban
+                System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                char confirmation = sc.next().charAt(0);
+                if (confirmation == 'Y') {
+                    System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                    String filename = sc.next();
+                    WriteToFile.writeFile(Float.toString(y), filename);
+                }
             } else if (chosen == 5) {
-                BicubicSpline.interpolation();
+                System.out.println("---------------INTERPOLASI BICUBIC SPLINE---------------\n");
+                float result = BicubicSpline.interpolation();
+
+                // penyimpanan jawaban
+                System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                char confirmation = sc.next().charAt(0);
+                if (confirmation == 'Y') {
+                    System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                    String filename = sc.next();
+                    WriteToFile.writeFile(Float.toString(result), filename);
+                }
             } else if (chosen == 6) {
                 Regresi.regresiBerganda();
+
+                // save jawaban
+                // System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                // char confirmation = sc.next().charAt(0);
+                // if (confirmation == 'Y') {
+                //     System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                //     String filename = sc.next();
+                //     WriteToFile.writeFile(Float.toString(result), filename);
+                // }
             } else if (chosen == 7) {
                 System.out.println("---------------KELUAR DARI PROGRAM---------------\n");
                 // sc.close();
