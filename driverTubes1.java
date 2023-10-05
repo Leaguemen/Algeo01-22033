@@ -54,6 +54,7 @@ public class driverTubes1 {
                 float[] solution = new float[0];
                 boolean detNotZero = true;
                 if (chosen1 >= 1 && chosen1 <= 4) {
+                    System.out.print("Pilih cara input:\n1. Terminal\n2. File\nPilihan: ");
                     if (chosen1 == 1) {
                         System.out.println("---------------METODE ELIMINASI GAUSS---------------");
                         Matrix mAug = inputSPLMatrix();
