@@ -319,18 +319,19 @@ public class driverTubes1 {
                 Interpolasi_Polinomial f = Interpolasi_Polinomial.interpolasiPolinomial(x, koleksiTitik);
                 
                 // penyimpanan jawaban
-                if (pilihanInp == 1 || namaFile != "") {
-                    System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
-                    char confirmation = sc.next().charAt(0);
-                    if (confirmation == 'Y') {
-                        System.out.print("Masukkan nama file (pakai \".txt\"): ");
-                        String filename = sc.next();
-                        String print = WriteToFile.ArrayofStringtoString((f.koefisien));
-                        WriteToFile.writeFile(print, filename);
-                        WriteToFile.writeFile(Float.toString(f.y), filename);
+                    if (pilihanInp == 1 || namaFile != "") {
+                        System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                        char confirmation = sc.next().charAt(0);
+                        if (confirmation == 'Y') {
+                            System.out.print("Masukkan nama file (pakai \".txt\"): ");
+                            String filename = sc.next();
+                            String print = WriteToFile.ArrayofStringtoString((f.koefisien));
+                            WriteToFile.writeFile(print, filename);
+                            WriteToFile.writeFile(Float.toString(f.y), filename);
+                        }
+                    } else {
+                        System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                     }
-                } else {
-                    System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 5) {
                 System.out.println("---------------INTERPOLASI BICUBIC SPLINE---------------");
@@ -439,5 +440,4 @@ public class driverTubes1 {
             }
         }
     }
-}
 }
