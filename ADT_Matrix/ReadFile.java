@@ -1,7 +1,6 @@
 package ADT_Matrix;
 
 import java.io.*;
-import java.util.*;
 
 
 public class ReadFile {
@@ -17,29 +16,18 @@ public class ReadFile {
         br.close();
         return n;
     }
-    
-    public static String pilihFile (String namaFile) {
-        /* I.S : namaFile sembarang */
-        /* F.S : namaFile terdefinisi */
-        boolean isFileExist = false;
-        Scanner in = new Scanner (System.in);
-        while (!isFileExist) {
-            System.out.print("Masukkan nama file : ");
-            namaFile = in.nextLine();
-            String currentDirectory = System.getProperty("user.dir");
-            File directory = new File(currentDirectory);
 
-            for (File file : directory.listFiles()) {
-                if (file.isFile() && file.getName().equals(namaFile)) {
-                    isFileExist = true;
-                }
-            }
-            if (!isFileExist) {
-                System.out.println("File tidak ditemukan.");
+    public static boolean isFileExist (String nama_file) {
+        File currentDir = new File(".");
+        File parentDir = currentDir.getParentFile();
+        File directory = new File (parentDir,"test");
+        boolean FileExist = false;
+        for (File file : directory.listFiles()) {
+            if (file.isFile() && file.getName().equals(nama_file)) {
+                FileExist = true;
             }
         }
-        in.close();
-        return namaFile;
+        return FileExist;
     }
 
     public static Matrix parseFile (Matrix m, String nama_file) throws Exception {
