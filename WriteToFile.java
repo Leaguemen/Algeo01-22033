@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.FileWriter;   // Import the FileWriter class
 import java.io.IOException;  // Import the IOException class to handle errors
 
@@ -20,18 +21,22 @@ public class WriteToFile {
     }
 
     public static String ArrayofStringtoString(float[] lis){
-      String holder="[";
+      String holder="";
       for(int i =0; i<lis.length;i++){
         holder+= Float.toString(lis[i]);
-        holder += " ";
+        if (i != lis.length - 1) {
+          holder += " ";
+        }
       }
-      holder+="]";
       return holder;
     }
 
    public static void writeFile(String x,String fileName){
         try {
-      String fileDirectory = "destination\\"+fileName+".txt"  ;  
+      File fileDirectory = new File("destination\\" + fileName + ".txt");
+      if (!fileDirectory.exists()){
+        fileDirectory.createNewFile();
+      }
       FileWriter myWriter = new FileWriter(fileDirectory);
       myWriter.write(x);
       myWriter.close();
@@ -41,9 +46,9 @@ public class WriteToFile {
       e.printStackTrace();
     }
    } 
-  public static void main(String[] args) {
-        Matrix sean = new Matrix(3, 3);
-        Matrix.readMatrix(sean, 3, 3);
-        System.out.println(MatrixtoString(sean));
-    }
+//   public static void main(String[] args) {
+//         Matrix sean = new Matrix(3, 3);
+//         Matrix.readMatrix(sean, 3, 3);
+//         System.out.println(MatrixtoString(sean));
+//     }
 }

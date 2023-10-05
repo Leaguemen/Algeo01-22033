@@ -88,7 +88,7 @@ public class Regresi {
     }
 
     public static String tampilHitungNilai(float result) {
-        String tampil = "f(xk) = " + result;
+        String tampil = "f(xk) = " + Float.toString(result);
         return tampil;
     }
 
@@ -113,6 +113,6 @@ public class Regresi {
         String tampil1 = Regresi.tampilHitungNilai(result);
         System.out.println(result);
         return tampil + "\n" + tampil1;
-}
+    }
 
 }

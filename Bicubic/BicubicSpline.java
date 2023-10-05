@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class BicubicSpline {
     private static Scanner in = new Scanner(System.in);
-    public static void interpolation () {
+    public static float interpolation () {
         // KAMUS
         Matrix m = new Matrix(4,4);
         System.out.println("Masukkan matris:");
@@ -83,5 +83,6 @@ public class BicubicSpline {
             // System.out.println(result);
         }
         System.out.println("f(" + targetX + "," + targetY + ")=" + result);
+        return result;
     }
 }
