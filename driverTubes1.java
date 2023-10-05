@@ -384,6 +384,7 @@ public class driverTubes1 {
                     int n = 0;
                     float[] solusi = new float[100];
                     float[] peubah = new float[100];
+                    String namaFile = "";
                     if (pilihanInput == 1) {
                         System.out.print("Masukkan jumlah peubah (n): ");
                         n = sc.nextInt();
@@ -401,21 +402,34 @@ public class driverTubes1 {
                     } else if (pilihanInput == 2) {
                         namaFile = pilihFile(namaFile);
                         if (namaFile != "") {
-                            m = ReadFile.readMatrixFromFile(namaFile);
-                            float[] xy = ReadFile.readBottomLine(namaFile);
-                            targetX = xy[0];
-                            targetY = xy[1];
+                            Matrix m = ReadFile.readMatrixFromFile(namaFile);
+                            n = m.colEff-1;
+                            peubah = ReadFile.readBottomLine(namaFile);
+                            Matrix matrixM = Regresi.prosesRegresiBerganda(n, m.rowEff);
+                            solusi = Regresi.ambilHasil(matrixM);
                         }
                     }
 
-                // save jawaban
-                // System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
-                // char confirmation = sc.next().charAt(0);
-                // if (confirmation == 'Y') {
-                //     System.out.print("Masukkan nama file (tanpa \".txt\"): ");
-                //     String filename = sc.next();
-                //     WriteToFile.writeFile(Float.toString(result), filename);
-                // }
+                    // save jawaban
+                    if (pilihanInput == 1 || namaFile != "") {
+                        Regresi f = Regresi.regresiBerganda(n, solusi, peubah);
+
+                        // penyimpanan jawaban
+                        System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                        char confirm = sc.next().charAt(0);
+                        if (confirm == 'Y') {
+                            System.out.print("Masukkan nama file (pakai \".txt\"): ");
+                            String filename = sc.next();
+                            String ab = WriteToFile.ArrayofStringtoString(f.koef);
+                            WriteToFile.writeFile(ab, filename);
+                            WriteToFile.writeFile(Float.toString(f.nilai), filename);
+                        }
+                    } else {
+                        System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
+                    }
+                } else {
+                    System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
+                }
             } else if (chosen == 7) {
                 System.out.println("---------------KELUAR DARI PROGRAM---------------\n");
                 // sc.close();
