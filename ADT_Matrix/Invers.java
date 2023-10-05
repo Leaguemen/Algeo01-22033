@@ -39,7 +39,7 @@ public class Invers {
     }
 
     public static Matrix InverseWithGaussJordan (Matrix m) {
-        if (reduksiBaris.getDeterminant(m) != 0) {
+        if (Cofactor.cofactorDeterminant(m) != 0) {
             int i, j, k;
             int n = 0;
             Matrix hasilInvers = MakeIdentity(m.rowEff,m.colEff);
@@ -80,7 +80,7 @@ public class Invers {
     }
 
     public static Matrix InverseWithCofactor (Matrix m) {
-        if (reduksiBaris.getDeterminant(m) != 0)  {
+        if (Cofactor.cofactorDeterminant(m) != 0)  {
             Matrix hasilInvers = new Matrix(m.rowEff, m.colEff);
             int i, j;
 
@@ -101,7 +101,7 @@ public class Invers {
 
     public static float[] SolusiSPLDenganInvers (Matrix m, int pilihan) {
         Matrix A = MatriksSoal(m);
-        if (reduksiBaris.getDeterminant(A) != 0) {
+        if (Cofactor.cofactorDeterminant(A) != 0) {
             Matrix Ainvers = new Matrix(A.rowEff,A.colEff);
             int i;
             Matrix b = MatriksJawaban(m);

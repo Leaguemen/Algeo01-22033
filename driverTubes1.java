@@ -80,7 +80,7 @@ public class driverTubes1 {
                         System.out.println("---------------METODE ELIMINASI GAUSS---------------");
                     } else if (chosen1 == 2) {
                         System.out.println("---------------METODE ELIMINASI GAUSS-JORDAN---------------");
-                    } else if (chosen1 == 2) {
+                    } else if (chosen1 == 3) {
                         System.out.println("----------------METODE MATRIKS BALIKAN---------------");
                         System.out.println("Pilih metode invers:\n1. Invers dengan matriks identitas\n2. Invers dengan ekspansi kofaktor");
                         pilihan = sc.nextInt();
