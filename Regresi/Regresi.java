@@ -4,6 +4,14 @@ import java.util.Scanner;
 
 public class Regresi {
 
+    public float[] koef = new float[100];
+    public float nilai;
+
+    public Regresi (float[] koef, float nilai) {
+        this.koef = koef;
+        this.nilai = nilai;
+    }
+
     public static Matrix readPoint (int n, int m) {
         // Fungsi untuk menerima matriks di awal
         Matrix mat = new Matrix(m, n+1);
@@ -92,27 +100,15 @@ public class Regresi {
         return tampil;
     }
 
-    public static String regresiBerganda() {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Masukkan jumlah peubah (n): ");
-        int n = in.nextInt();
-        System.out.print("Masukkan jumlah data (m): ");
-        int m = in.nextInt();
-        System.out.println("Masukkan sebanyak m baris dalam bentuk (x1 x2 ... xn y):");
-        Matrix matrixM = Regresi.prosesRegresiBerganda(n, m);
-        float[] solusi = Regresi.ambilHasil(matrixM);
-        System.out.println("Masukkan nilai yang akan diestemasi (x1 x2 ... xn):");
-        float[] peubah = new float[n];
-        int i;
-        for (i=0;i<n;i++) {
-            peubah[i] = in.nextFloat();
-        }
-        float result = Regresi.hitungNilai(solusi, peubah, n);
-        String tampil = Regresi.tampilHasil(solusi);
+    public static Regresi regresiBerganda(int n, float[] koefisien, float[] peubah) {
+        float result = Regresi.hitungNilai(koefisien, peubah, n);
+        String tampil = Regresi.tampilHasil(koefisien);
         System.out.println(tampil);
         String tampil1 = Regresi.tampilHitungNilai(result);
+        System.out.println(tampil1);
         System.out.println(result);
-        return tampil + "\n" + tampil1;
+        Regresi f = new Regresi(koefisien,result);
+        return f;
     }
 
 }
