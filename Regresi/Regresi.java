@@ -98,9 +98,10 @@ public class Regresi {
         int n = in.nextInt();
         System.out.print("Masukkan jumlah data (m): ");
         int m = in.nextInt();
+        System.out.println("Masukkan sebanyak m baris dalam bentuk (x1 x2 ... xn y):");
         Matrix matrixM = Regresi.prosesRegresiBerganda(n, m);
         float[] solusi = Regresi.ambilHasil(matrixM);
-        System.out.println("Masukkan nilai yang akan diestemasi");
+        System.out.println("Masukkan nilai yang akan diestemasi (x1 x2 ... xn):");
         float[] peubah = new float[n];
         int i;
         for (i=0;i<n;i++) {

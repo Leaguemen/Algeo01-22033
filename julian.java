@@ -11,5 +11,8 @@ public class julian {
 
         System.out.println(x + " " + y);
 
+        float[] a = {};
+        System.out.println(a.length);
+
     }
 }

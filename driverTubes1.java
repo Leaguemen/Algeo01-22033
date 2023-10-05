@@ -2,15 +2,32 @@ import ADT_Matrix.*;
 import Bicubic.BicubicSpline;
 import Interpolasi.Interpolasi_Polinomial;
 import Regresi.Regresi;
-
 import java.util.Scanner;
 
 public class driverTubes1 {
     private static Scanner sc = new Scanner(System.in);
+
+    public static Matrix inputSPLMatrix() {
+        System.out.println("Masukkan ukuran matriks (m n): ");
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+        System.out.println("Masukkan matriks augmented dengan ukuran m * (n + 1): ");
+        Matrix mAug = new Matrix(n, n + 1);
+        Matrix.readMatrix(mAug, m, n + 1);
+        if (m != n) {
+            int i, j;
+            for(i=0;i<n-m;i++) {
+                for(j=0;j<n + 1;j++) {
+                    mAug.memory[i + m][j] = 0;
+                }
+            }
+        }
+        return mAug;
+    }
     public static void main(String args[]) {
         boolean exit = false;
         while (!exit) {
-            System.out.print("---------------MENU---------------"
+            System.out.print("\n---------------MENU---------------"
                                 + "\n1. Sistem Persamaan Linear"
                                 + "\n2. Determinan"
                                 + "\n3. Matriks Balikan"
@@ -32,17 +49,66 @@ public class driverTubes1 {
                                     + "\nPilihan: ");
 
                 int chosen1 = sc.nextInt();
+                System.out.println();
 
-                if (chosen1 == 1) {
+                float[] solution = new float[0];
+                boolean detNotZero = true;
+                if (chosen1 >= 1 && chosen1 <= 4) {
+                    if (chosen1 == 1) {
+                        System.out.println("---------------METODE ELIMINASI GAUSS---------------");
+                        Matrix mAug = inputSPLMatrix();
+                        solution = Gauss.gauss(mAug); // solusi sudah diprint oleh function
+                    } else if (chosen1 == 2) {
+                        System.out.println("---------------METODE ELIMINASI GAUSS-JORDAN---------------");
+                        Matrix mAug = inputSPLMatrix();
+                        solution = GaussJordan.SPLGaussJordan(mAug); // solusi sudah diprint oleh function
+                    } else if (chosen1 == 3) {
+                        System.out.println("----------------METODE MATRIKS BALIKAN---------------");
+                        System.out.println("Pilih metode invers:\n1. Invers dengan matriks identitas\n2. Invers dengan ekspansi kofaktor");
+                        int pilihan = sc.nextInt();
+                        Matrix mAug = inputSPLMatrix();
+                        solution = Invers.SolusiSPLDenganInvers(mAug, pilihan);
+                        detNotZero = (solution.length != 0);
+                        if (!detNotZero) {
+                            System.out.println("\nSolusi SPL tidak dapat ditemukan dengan metode invers.");
+                        }
+                    } else if (chosen1 == 4) {
+                        System.out.println("---------------METODE CRAMER---------------");
+                        Matrix mAug = inputSPLMatrix();
+                        solution = Cramer.SPLCramer(mAug); // solusi sudah diprint oleh function
+                        detNotZero = (solution.length != 0);
+                        if (!detNotZero) {
+                            System.out.println("\nSolusi SPL tidak dapat ditemukan dengan metode Cramer.");
+                        }
+                    }
                     
-                } else if (chosen1 == 2) {
+                    // Memberi opsi simpan ke file
+                    if (detNotZero) {
+                        int i;
+                        for (i = 0; i < solution.length; i++) {
+                            System.out.print("x" + (i +1) + "=");
+                            System.out.print(solution[i]);
+                            if (i != solution.length - 1) {
+                                System.out.print(',');
+                            } else {
+                                System.out.println();
+                            }
+                        }
+                        System.out.println();
 
-                } else if (chosen1 == 3) {
-
-                } else if (chosen1 == 4) {
-
+                        System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                        char confirmation = sc.next().charAt(0);
+                        if (confirmation == 'Y') {
+                            System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                            System.out.println("ayam1");
+                            String filename = sc.nextLine();
+                            System.out.println("ayam2");
+                            String stringSolution = WriteToFile.ArrayofStringtoString(solution);
+                            WriteToFile.writeFile(stringSolution, filename);
+                        }
+                    }
                 } else {
-                    System.out.println("---------------Opsi tidak tersedia.---------------");
+                    System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 2) {
                 System.out.print("---------------DETERMINAN---------------"
@@ -51,6 +117,7 @@ public class driverTubes1 {
                                     + "\nPilihan: ");
 
                 int chosen2 = sc.nextInt();
+                System.out.println();
 
                 if (chosen2 == 1) {
                     System.out.print("---------------METODE REDUKSI BARIS---------------"
@@ -71,7 +138,7 @@ public class driverTubes1 {
                     float det = Cofactor.cofactorDeterminant(m);
                     System.out.println("Determinan: " + det);
                 } else {
-                    System.out.println("---------------Opsi tidak tersedia.---------------");
+                    System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 3) {
                 System.out.print("---------------MATRIKS BALIKAN----------------"
@@ -80,6 +147,7 @@ public class driverTubes1 {
                                     + "\nPilihan: ");
                                     
                 int chosen3 = sc.nextInt();
+                System.out.println();
 
                 if (chosen3 == 1) {
                     System.out.println("---------------METODE GAUSS-JORDAN---------------"
@@ -89,8 +157,12 @@ public class driverTubes1 {
                     System.out.println("Masukkan matriks:");
                     Matrix.readMatrix(m,n,n);
                     Matrix mNew = Invers.InverseWithGaussJordan(m);
-                    System.out.println("Matriks hasil invers: ");
-                    Matrix.displayMatrix(mNew);
+                    if (mNew.rowEff != 0) {
+                        System.out.println("Matriks hasil invers: ");
+                        Matrix.displayMatrix(mNew);
+                    } else {
+                        System.out.println("Matriks singular");
+                    }
                 } else if (chosen3 == 2) {
                     System.out.println("---------------METODE MATRIKS ADJOIN---------------"
                                             + "\nMasukkan ukuran matriks persegi(n): ");
@@ -99,10 +171,14 @@ public class driverTubes1 {
                     System.out.println("Masukkan matriks");
                     Matrix.readMatrix(m, n, n);
                     Matrix mNew = Invers.InverseWithCofactor(m);
-                    System.out.println("Matriks hasil invers; ");
-                    Matrix.displayMatrix(mNew);
+                    if (mNew.rowEff != 0) {
+                        System.out.println("Matriks hasil invers; ");
+                        Matrix.displayMatrix(mNew);
+                    } else {
+                        System.out.println("Matriks singular");
+                    }
                 } else {
-                    System.out.println("---------------Opsi tidak tersedia.---------------");
+                    System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 4) {
                 Interpolasi_Polinomial.interpolasiPolinomial();
@@ -111,11 +187,11 @@ public class driverTubes1 {
             } else if (chosen == 6) {
                 Regresi.regresiBerganda();
             } else if (chosen == 7) {
-                System.out.println("---------------Keluar dari Program---------------");
+                System.out.println("---------------KELUAR DARI PROGRAM---------------\n");
                 // sc.close();
                 exit = true;
             } else {
-                System.out.println("---------------Opsi tidak tersedia.--------------");
+                System.out.println("---------------OPSI TIDAK TERSEDIA--------------\n");
             }
         }
     }

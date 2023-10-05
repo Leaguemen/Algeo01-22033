@@ -58,8 +58,8 @@ public class Matrix {
 
     public static void readMatrix(Matrix m,int nRow, int nCol){
         Scanner scanner = new Scanner(System.in);
-            for(int i =0; i < m.rowEff;i++){
-                for(int j = 0; j< m.colEff;j++){
+            for(int i =0; i < nRow;i++){
+                for(int j = 0; j< nCol;j++){
                     m.memory[i][j] = scanner.nextFloat();
                 }
             }

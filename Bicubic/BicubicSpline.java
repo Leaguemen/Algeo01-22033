@@ -7,7 +7,9 @@ public class BicubicSpline {
     public static void interpolation () {
         // KAMUS
         Matrix m = new Matrix(4,4);
+        System.out.println("Masukkan matris:");
         Matrix.readMatrix(m,4,4);
+        System.out.println("Masukkan titik yang ingin diestimasi (x y): ");
         float targetX = in.nextFloat();
         float targetY = in.nextFloat();
         int i, j, x, y;

@@ -17,13 +17,18 @@ public class Cramer {
 
     public static float[] SPLCramer (Matrix m) {
         if (Cofactor.cofactorDeterminant(Matrix.coefficientMatrix((m))) == 0) {
-            System.out.println("Solusi SPL tidak dapat ditemukan dengan metode Cramer.");
+            float[] n = {};
+            return n;
         } else {
             int i;
             int last = Matrix.getLastIdxRow(m);
             float[] solution = new float[100];
             for (i=0;i<=last;i++) {
                 solution[i] = Cofactor.cofactorDeterminant(replaceColumnWithConstant(m,i))/Cofactor.cofactorDeterminant(Matrix.coefficientMatrix(m));        
+                System.out.print("x"+ (i + 1) + "=" + solution[i]);
+                if (i != last) {
+                    System.out.print(",");
+                }
             }
             return solution;
         }
