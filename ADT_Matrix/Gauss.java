@@ -196,7 +196,6 @@ public class Gauss {
             makeEchelon(m);
             if(uniqueSolution(m)){
                 System.out.println("SOLUSI UNIK");
-                Matrix.displayMatrix(m);
                 float[] solutions = backwardSubstition(m);
                 for(int i=1;i<=m.rowEff;i++){
                     System.out.println(String.format("X%d = %f",i,solutions[i-1]));
@@ -289,7 +288,6 @@ public class Gauss {
             makeEchelon(m);
             if(uniqueSolution(m)){
                 System.out.println("SOLUSI UNIK");
-                Matrix.displayMatrix(m);
                 float[] solutions = backwardSubstition(m);
                 String solutionString ="";
                 for(int i=1;i<=m.rowEff;i++){

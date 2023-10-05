@@ -307,7 +307,7 @@ public class driverTubes1 {
                     if (pilihanInp == 1) {
                         koleksiTitik = Interpolasi_Polinomial.titikInput();
                         System.out.print("Masukkan x yang ingin diuji: ");
-                        x = Float.parseFloat(sc.nextLine());
+                        x = Float.parseFloat(sc.next());
                     } else if (pilihanInp == 2) {
                         namaFile = pilihFile(namaFile);
                         if (namaFile != "") {

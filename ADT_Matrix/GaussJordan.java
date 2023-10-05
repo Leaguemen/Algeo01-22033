@@ -104,14 +104,11 @@ public class GaussJordan {
 
         }
         else{
-            System.out.println("non homo");
             Gauss.makeEchelon(m);
-            Matrix.displayMatrix(m);
             if(Gauss.uniqueSolution(m)){
                 float[] solution = new float[m.rowEff];
                 System.out.println("unique");
                 echelontoEchelonBaris(m);
-                Matrix.displayMatrix(m);
                 for(int i =0;i<m.rowEff;i++){
                     solution[i]=m.memory[i][m.colEff-1];
                 } 
@@ -274,7 +271,6 @@ public class GaussJordan {
         else{
             // System.out.println("non homo");
             Gauss.makeEchelon(m);
-            Matrix.displayMatrix(m);
             if(Gauss.uniqueSolution(m)){
                 float[] solution = new float[m.rowEff];
                 for(int i =0;i<m.rowEff;i++){
@@ -282,7 +278,6 @@ public class GaussJordan {
                 }
                 System.out.println("unique");
                 echelontoEchelonBaris(m);
-                Matrix.displayMatrix(m); 
                 String solutionString ="";
                 for(int i =0; i< m.rowEff;i++){
                     solutionString += "x" + (i+1) + " = " + Float.toString(solution[i]) + "\n";
