@@ -99,14 +99,14 @@ public class ReadFile {
         return m;
     }
 
-    public static Float[] readBottomLine (String namaFile) throws Exception{
+    public static float[] readBottomLine (String namaFile) throws Exception{
         File file = new File(namaFile);
         BufferedReader br = new BufferedReader(new FileReader(file));
         String line;
         String temp = "";
         int lineLenght = countLine(namaFile);
         int i; int j; int k =0;
-        Float array[] = new Float[10];
+        float array[] = new float[10];
 
         for (i = 0; i < lineLenght; i++) {
             line = br.readLine();
