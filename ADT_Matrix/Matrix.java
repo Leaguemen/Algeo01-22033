@@ -55,18 +55,25 @@ public class Matrix {
         }
     }
 
-
     public static void readMatrix(Matrix m,int nRow, int nCol){
         Scanner scanner = new Scanner(System.in);
             for(int i =0; i < nRow;i++){
                 for(int j = 0; j< nCol;j++){
-                    m.memory[i][j] = scanner.nextFloat();
+                    String temp = scanner.next();
+                    if(temp.contains("/")){
+                        float num,den;
+                        String[] frac = temp.split("/");
+                        num = Float.parseFloat(frac[0]);
+                        den = Float.parseFloat(frac[1]);
+                        m.memory[i][j] = num/den;
+                    }
+                    else{
+                        m.memory[i][j] = Float.parseFloat(temp);
+                    }
                 }
             }
             // scanner.close();
-        }
-
-
+    }
 
     public static void displayMatrix(Matrix m){
         for(int i = 0; i<m.rowEff;i++){
