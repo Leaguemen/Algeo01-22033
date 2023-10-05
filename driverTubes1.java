@@ -29,7 +29,7 @@ public class driverTubes1 {
 
     public static String pilihFile (String namaFile) {
         boolean isFileExist = false;
-        while (!isFileExist) {
+        if (!isFileExist) {
             System.out.print("Masukkan nama file : ");
             namaFile = sc.nextLine();
 
@@ -41,7 +41,7 @@ public class driverTubes1 {
         return namaFile;
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception {
         boolean exit = false;
         while (!exit) {
             System.out.print("\n---------------MENU---------------"
@@ -71,63 +71,82 @@ public class driverTubes1 {
                 float[] solution = new float[0];
                 boolean detNotZero = true;
                 if (chosen1 >= 1 && chosen1 <= 4) {
-                    System.out.print("Pilih input matriks:\n1. Input melalui teriman\n2. Input melalu file .txt\nPilihan: ");
-                    int pilihanInput = sc.nextInt();
-
-                    if (pilihanInput == 1) {
-                        
-                    }
+                    int pilihan = 0;
+                    // pesan sambut
                     if (chosen1 == 1) {
                         System.out.println("---------------METODE ELIMINASI GAUSS---------------");
-                        Matrix mAug = inputSPLMatrix();
-                        solution = Gauss.gauss(mAug);
                     } else if (chosen1 == 2) {
                         System.out.println("---------------METODE ELIMINASI GAUSS-JORDAN---------------");
-                        Matrix mAug = inputSPLMatrix();
-                        solution = GaussJordan.SPLGaussJordan(mAug);
-                    } else if (chosen1 == 3) {
+                    } else if (chosen1 == 2) {
                         System.out.println("----------------METODE MATRIKS BALIKAN---------------");
                         System.out.println("Pilih metode invers:\n1. Invers dengan matriks identitas\n2. Invers dengan ekspansi kofaktor");
-                        int pilihan = sc.nextInt();
-                        Matrix mAug = inputSPLMatrix();
-                        solution = Invers.SolusiSPLDenganInvers(mAug, pilihan);
-                        detNotZero = (solution.length != 0);
-                        if (!detNotZero) {
-                            System.out.println("\nSolusi SPL tidak dapat ditemukan dengan metode invers.");
-                        }
-                    } else if (chosen1 == 4) {
+                        pilihan = sc.nextInt();
+                    } else {
                         System.out.println("---------------METODE CRAMER---------------");
-                        Matrix mAug = inputSPLMatrix();
-                        solution = Cramer.SPLCramer(mAug); // solusi sudah diprint oleh function
-                        detNotZero = (solution.length != 0);
-                        if (!detNotZero) {
-                            System.out.println("\nSolusi SPL tidak dapat ditemukan dengan metode Cramer.");
-                        }
                     }
-                    
-                    // Memberi opsi simpan ke file
-                    if (detNotZero) {
-                        int i;
-                        System.out.println();
-                        for (i = 0; i < solution.length; i++) {
-                            System.out.print("x" + (i +1) + "=");
-                            System.out.print(solution[i]);
-                            if (i != solution.length - 1) {
-                                System.out.print(", ");
-                            } else {
+
+                    // input matriks
+                    System.out.print("Pilih cara input matriks:\n1. Input melalui terminal\n2. Input melalu file .txt\nPilihan: ");
+                    int pilihanInput = sc.nextInt();
+                    Matrix mAug = new Matrix(0,0);
+                    if (pilihanInput == 1 || pilihanInput== 2) {
+                        String namaFile = "";
+                        
+                        if (pilihanInput == 1) {
+                            mAug = inputSPLMatrix();
+                        } else if (pilihanInput == 2) {
+                            namaFile = pilihFile(namaFile);
+                            mAug = ReadFile.parseFile(mAug, namaFile);
+                        }
+
+                        if (pilihanInput == 1 || namaFile != "") {
+                        // Pemrosesan tiap pilihan
+                            if (chosen1 == 1) {
+                                solution = Gauss.gauss(mAug);
+                            } else if (chosen1 == 2) {
+                                solution = GaussJordan.SPLGaussJordan(mAug);
+                            } else if (chosen1 == 3) {
+                                solution = Invers.SolusiSPLDenganInvers(mAug, pilihan);
+                                detNotZero = (solution.length != 0);
+                                if (!detNotZero) {
+                                    System.out.println("\nSolusi SPL tidak dapat ditemukan dengan metode invers.");
+                                }
+                            } else if (chosen1 == 4) {
+                                solution = Cramer.SPLCramer(mAug);
+                                detNotZero = (solution.length != 0);
+                                if (!detNotZero) {
+                                    System.out.println("\nSolusi SPL tidak dapat ditemukan dengan metode Cramer.");
+                                }
+                            }
+                            
+                            if (detNotZero) {
+                                int i;
                                 System.out.println();
+                                // print solusi
+                                for (i = 0; i < solution.length; i++) {
+                                    System.out.print("x" + (i +1) + "=");
+                                    System.out.print(solution[i]);
+                                    if (i != solution.length - 1) {
+                                        System.out.print(", ");
+                                    } else {
+                                        System.out.println();
+                                    }
+                                }
+                                System.out.println();
+
+                                // memberi opsi simpan ke file
+                                System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                                char confirmation = sc.next().charAt(0);
+                                if (confirmation == 'Y') {
+                                    System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                                    String filename = sc.next();
+                                    String stringSolution = WriteToFile.ArrayofStringtoString(solution);
+                                    WriteToFile.writeFile(stringSolution, filename);
+                                }
                             }
                         }
-                        System.out.println();
-
-                        System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
-                        char confirmation = sc.next().charAt(0);
-                        if (confirmation == 'Y') {
-                            System.out.print("Masukkan nama file (tanpa \".txt\"): ");
-                            String filename = sc.next();
-                            String stringSolution = WriteToFile.ArrayofStringtoString(solution);
-                            WriteToFile.writeFile(stringSolution, filename);
-                        }
+                    } else {
+                        System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                     }
                 } else {
                     System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
@@ -141,10 +160,15 @@ public class driverTubes1 {
                 int chosen2 = sc.nextInt();
                 System.out.println();
                 if (chosen2 == 1 || chosen2 == 2) {
+                    if (chosen2 == 1) {
+                        System.out.print("---------------METODE REDUKSI BARIS---------------");
+                    } else if (chosen2 == 2) {
+                        System.out.print("---------------METODE KOFAKTOR---------------");
+                    }
+
                     float det = 0;
                     if (chosen2 == 1) {
-                        System.out.print("---------------METODE REDUKSI BARIS---------------"
-                                            + "\nMasukkan ukuran matriks persegi (n): ");
+                        System.out.print("\nMasukkan ukuran matriks persegi (n): ");
                         int n = sc.nextInt();
                         Matrix m = new Matrix(n,n);
                         System.out.println("Masukkan matriks:");
@@ -152,8 +176,7 @@ public class driverTubes1 {
                         det = reduksiBaris.getDeterminant(m);
                         System.out.println("\nDeterminan: " + det);
                     } else if (chosen2 == 2) {
-                        System.out.print("---------------METODE KOFAKTOR---------------"
-                                            + "\nMasukkan ukuran matriks persegi (n): ");
+                        System.out.print("\nMasukkan ukuran matriks persegi (n): ");
                         int n = sc.nextInt();
                         Matrix m = new Matrix(n,n);
                         System.out.println("Masukkan matriks:");

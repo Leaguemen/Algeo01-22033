@@ -12,7 +12,6 @@ public class julian {
 
         // System.out.println(x + " " + y);
 
-<<<<<<< HEAD
         // float[] a = {};
         // System.out.println(a.length);
         File currentDir = new File(".");
@@ -23,7 +22,6 @@ public class julian {
                 System.out.println("yey");
             }
         }
-=======
         int n = 5;
         test1(n);
         System.out.println(n);
@@ -31,6 +29,5 @@ public class julian {
 
     public static void test1(int n) {
         n += 7;
->>>>>>> ba44c680cad545fdfe69773719c1da96e43aa2f5
     }
 }
