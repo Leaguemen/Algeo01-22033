@@ -39,9 +39,6 @@ public class Invers {
     }
 
     public static Matrix InverseWithGaussJordan (Matrix m) {
-<<<<<<< HEAD:ADT_Matrix/Invers.java
-        if (Cofactor.cofactorDeterminant(m) != 0) {
-=======
         Matrix temp = new Matrix(m.rowEff, m.colEff);
         for (int i =0; i < m.rowEff; i++) {
             for (int j =0; j < m.colEff; j++) {
@@ -49,7 +46,6 @@ public class Invers {
             }
         }
         if (reduksiBaris.getDeterminant(m) != 0) {
->>>>>>> 2559e6b961a053a2c1ef5865eeaa2008e3e44720:src/ADT_Matrix/Invers.java
             int i, j, k;
             int n = 0;
             Matrix hasilInvers = MakeIdentity(temp.rowEff,temp.colEff);
@@ -90,10 +86,6 @@ public class Invers {
     }
 
     public static Matrix InverseWithCofactor (Matrix m) {
-<<<<<<< HEAD:ADT_Matrix/Invers.java
-        if (Cofactor.cofactorDeterminant(m) != 0)  {
-            Matrix hasilInvers = new Matrix(m.rowEff, m.colEff);
-=======
         Matrix temp = new Matrix(m.rowEff, m.colEff);
         for (int i =0; i < m.rowEff; i++) {
             for (int j =0; j < m.colEff; j++) {
@@ -102,7 +94,6 @@ public class Invers {
         }
         if (reduksiBaris.getDeterminant(m) != 0)  {
             Matrix hasilInvers = new Matrix(temp.rowEff, temp.colEff);
->>>>>>> 2559e6b961a053a2c1ef5865eeaa2008e3e44720:src/ADT_Matrix/Invers.java
             int i, j;
 
             for (i = 0; i < m.rowEff; i++) {
