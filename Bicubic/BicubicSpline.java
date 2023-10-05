@@ -56,15 +56,8 @@ public class BicubicSpline {
 
         // temukan matriks ma
         Matrix inversemX = Invers.InverseWithGaussJordan(mX);
-        ma = Matrix.multiplyMatrix(inversemX,mY);
 
-        System.out.println("mY");
-        Matrix.displayMatrix(mY);
-        System.out.println("inversemX");
-        Matrix.displayMatrix(inversemX);
-        System.out.println("ma");
         Matrix.displayMatrix(ma);
-
         result = 0;
         for(i=0;i<16;i++) {
             result += (ma.memory[i][0] * (Math.pow(targetX,i%4) * Math.pow(targetY,i/4)));
