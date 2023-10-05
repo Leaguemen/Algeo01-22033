@@ -5,6 +5,14 @@ import ADT_Matrix.*;
 
 public class Interpolasi_Polinomial {
 
+    public float[] koefisien = new float[1];
+    public float y;
+
+    public Interpolasi_Polinomial(float[] koefisien, float y) {
+        this.koefisien = koefisien;
+        this.y = y;
+    }
+
     private static Scanner scanner = new Scanner(System.in);
 
     public static Matrix titikInput(){
@@ -17,10 +25,7 @@ public class Interpolasi_Polinomial {
     }
 
 
-    public static float interpolasiPolinomial(){
-        System.out.print("Masukkan x yang ingin diuji: ");
-        float x = Float.parseFloat(scanner.nextLine());
-        Matrix koleksiTitik = titikInput();
+    public static Interpolasi_Polinomial interpolasiPolinomial(float x, Matrix koleksiTitik){      
         Matrix augmented = new Matrix(koleksiTitik.rowEff, koleksiTitik.rowEff+1);
         //populate the last row
         for(int i=0;i<augmented.rowEff;i++){
@@ -57,7 +62,8 @@ public class Interpolasi_Polinomial {
         }
         System.out.print("Jawabannya adalah: ");              
         System.out.println(y);
-        return(y);
+        Interpolasi_Polinomial f = new Interpolasi_Polinomial(koefisien, y);
+        return(f);
     }
 
     //  public static void main(String[] args){
