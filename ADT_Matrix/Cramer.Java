@@ -16,7 +16,7 @@ public class Cramer {
 
 
     public static float[] SPLCramer (Matrix m) {
-        if (Cofactor.cofactorDeterminant(Matrix.coefficientMatrix((m))) == 0) {
+        if (reduksiBaris.getDeterminant(Matrix.coefficientMatrix((m))) == 0) {
             float[] n = {};
             return n;
         } else {
@@ -24,7 +24,7 @@ public class Cramer {
             int last = Matrix.getLastIdxRow(m);
             float[] solution = new float[last+1];
             for (i=0;i<=last;i++) {
-                solution[i] = Cofactor.cofactorDeterminant(replaceColumnWithConstant(m,i))/Cofactor.cofactorDeterminant(Matrix.coefficientMatrix(m));        
+                solution[i] = reduksiBaris.getDeterminant(replaceColumnWithConstant(m,i))/reduksiBaris.getDeterminant(Matrix.coefficientMatrix(m));        
             }
             return solution;
         }
