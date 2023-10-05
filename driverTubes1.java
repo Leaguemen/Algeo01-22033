@@ -10,7 +10,7 @@ public class driverTubes1 {
     private static Scanner sc = new Scanner(System.in);
 
     public static Matrix inputSPLMatrix() {
-        System.out.println("\nMasukkan ukuran matriks (m n): ");
+        System.out.println("\nMasukkan ukuran matriks koefisien (m n): ");
         int m = sc.nextInt();
         int n = sc.nextInt();
         System.out.println("Masukkan matriks augmented dengan ukuran " + m + " * " + (n + 1) + ": ");
@@ -30,7 +30,7 @@ public class driverTubes1 {
     public static String pilihFile (String namaFile) {
         boolean isFileExist = false;
         if (!isFileExist) {
-            System.out.print("Masukkan nama file (pakai \".txt\"): ");
+            System.out.print("Masukkan nama file (pakai \".txt\") dari direktori test: ");
             namaFile = sc.next();
 
             isFileExist = ReadFile.isFileExist(namaFile);
@@ -233,9 +233,9 @@ public class driverTubes1 {
                 if (chosen3 == 1 || chosen3 == 2) {
                     // Pesan Sambut
                     if (chosen3 == 1) {
-                        System.out.print("---------------METODE GAUSS-JORDAN---------------");
+                        System.out.println("---------------METODE GAUSS-JORDAN---------------");
                     } else if (chosen3 == 2) {
-                        System.out.print("---------------METODE MATRIKS ADJOIN---------------");
+                        System.out.println("---------------METODE MATRIKS ADJOIN---------------");
                     }
 
                     // input matriks
@@ -296,7 +296,7 @@ public class driverTubes1 {
                     System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 4) {
-                System.out.println("---------------INTERPOLASI POLINOMIAL---------------\n");
+                System.out.println("---------------INTERPOLASI POLINOMIAL---------------");
                 float y = Interpolasi_Polinomial.interpolasiPolinomial();
 
                 // penyimpanan jawaban
@@ -308,16 +308,48 @@ public class driverTubes1 {
                     WriteToFile.writeFile(Float.toString(y), filename);
                 }
             } else if (chosen == 5) {
-                System.out.println("---------------INTERPOLASI BICUBIC SPLINE---------------\n");
-                float result = BicubicSpline.interpolation();
+                System.out.println("---------------INTERPOLASI BICUBIC SPLINE---------------");
+                System.out.print("Pilih cara input matriks:\n1. Input melalui terminal\n2. Input melalu file .txt\nPilihan: ");
+                int pilihanInput = sc.nextInt();
+                if (pilihanInput == 1 || pilihanInput== 2) {
+                    Matrix m = new Matrix(0,0);
+                    String namaFile = "";
+                    float targetX = 0;
+                    float targetY = 0;
+                    
+                    if (pilihanInput == 1) {
+                        m = new Matrix(4,4);
+                        System.out.println("Masukkan matris:");
+                        Matrix.readMatrix(m,4,4);
+                        System.out.println("Masukkan titik yang ingin diestimasi (x y): ");
+                        targetX = sc.nextFloat();
+                        targetY = sc.nextFloat();
+                    } else if (pilihanInput == 2) {
+                        namaFile = pilihFile(namaFile);
+                        if (namaFile != "") {
+                            m = ReadFile.readMatrixFromFile(namaFile);
+                            float[] xy = ReadFile.readBottomLine(namaFile);
+                            targetX = xy[0];
+                            targetY = xy[1];
+                        }
+                    }
 
-                // penyimpanan jawaban
-                System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
-                char confirmation = sc.next().charAt(0);
-                if (confirmation == 'Y') {
-                    System.out.print("Masukkan nama file (pakai \".txt\"): ");
-                    String filename = sc.next();
-                    WriteToFile.writeFile(Float.toString(result), filename);
+                    if (pilihanInput == 1 || namaFile != "") {
+                        float result = BicubicSpline.interpolation(m,targetX,targetY);
+
+                        // penyimpanan jawaban
+                        System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                        char confirmation = sc.next().charAt(0);
+                        if (confirmation == 'Y') {
+                            System.out.print("Masukkan nama file (pakai \".txt\"): ");
+                            String filename = sc.next();
+                            WriteToFile.writeFile(Float.toString(result), filename);
+                        }
+                    } else {
+                        System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
+                    }
+                } else {
+                    System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                 }
             } else if (chosen == 6) {
                 Regresi.regresiBerganda();

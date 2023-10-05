@@ -4,23 +4,12 @@ import java.util.Scanner;
 
 public class BicubicSpline {
     private static Scanner in = new Scanner(System.in);
-    public static float interpolation () {
-        // KAMUS
-        Matrix m = new Matrix(4,4);
-        System.out.println("Masukkan matris:");
-        Matrix.readMatrix(m,4,4);
-        System.out.println("Masukkan titik yang ingin diestimasi (x y): ");
-        float targetX = in.nextFloat();
-        float targetY = in.nextFloat();
+    public static float interpolation (Matrix m, float targetX, float targetY) {
         int i, j, x, y;
         float result;
         Matrix mY = new Matrix(16,1);
         Matrix mX = new Matrix(16,16);
         Matrix ma = new Matrix(16,1);
-
-        // ALGORITMA
-        // terima input
-        // in.close();
 
         // ubah matrix m jadi column matriks mY
         for(i=0;i<16;i++) {
@@ -68,19 +57,17 @@ public class BicubicSpline {
         // temukan matriks ma
         Matrix inversemX = Invers.InverseWithGaussJordan(mX);
         ma = Matrix.multiplyMatrix(inversemX,mY);
-        // System.out.println("Ini my");
-        // Matrix.displayMatrix(mY);
-        // System.out.println(targetX);
-        // System.out.println("ini ma");
-        // Matrix.displayMatrix(ma);
-        // System.out.println("ini result");
+
+        System.out.println("mY");
+        Matrix.displayMatrix(mY);
+        System.out.println("inversemX");
+        Matrix.displayMatrix(inversemX);
+        System.out.println("ma");
+        Matrix.displayMatrix(ma);
+
         result = 0;
         for(i=0;i<16;i++) {
             result += (ma.memory[i][0] * (Math.pow(targetX,i%4) * Math.pow(targetY,i/4)));
-            // System.out.print("ITERASI KE-");
-            // System.out.println(i);
-            // System.out.print(Math.pow(targetX,i%4) + " " + Math.pow(targetY,i/4) + "\n");
-            // System.out.println(result);
         }
         System.out.println("f(" + targetX + "," + targetY + ")=" + result);
         return result;
