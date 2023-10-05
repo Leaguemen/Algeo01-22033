@@ -30,13 +30,15 @@ public class driverTubes1 {
     public static String pilihFile (String namaFile) {
         boolean isFileExist = false;
         if (!isFileExist) {
-            System.out.print("Masukkan nama file: ");
+            System.out.print("Masukkan nama file (pakai \".txt\"): ");
             namaFile = sc.next();
 
             isFileExist = ReadFile.isFileExist(namaFile);
             if (!isFileExist) {
                 System.out.println("\nFile tidak ditemukan.");
                 namaFile = "";
+            } else {
+                namaFile = "test\\" + namaFile;
             }
         }
         return namaFile;
@@ -141,7 +143,7 @@ public class driverTubes1 {
                                 System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
                                 char confirmation = sc.next().charAt(0);
                                 if (confirmation == 'Y') {
-                                    System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                                    System.out.print("Masukkan nama file (pakai \".txt\"): ");
                                     String filename = sc.next();
                                     String stringSolution = WriteToFile.ArrayofStringtoString(solution);
                                     WriteToFile.writeFile(stringSolution, filename);
@@ -165,9 +167,9 @@ public class driverTubes1 {
                 if (chosen2 == 1 || chosen2 == 2) {
                     // Pesan Sambut
                     if (chosen2 == 1) {
-                        System.out.print("---------------METODE REDUKSI BARIS---------------");
+                        System.out.println("---------------METODE REDUKSI BARIS---------------");
                     } else if (chosen2 == 2) {
-                        System.out.print("---------------METODE KOFAKTOR---------------");
+                        System.out.println("---------------METODE KOFAKTOR---------------");
                     }
 
                     // input matriks
@@ -190,25 +192,29 @@ public class driverTubes1 {
                             }
                         }
 
-                        float det = 0;
-                        if (chosen2 == 1) {
-                            det = reduksiBaris.getDeterminant(m);
-                        } else if (chosen2 == 2) {
-                            det = Cofactor.cofactorDeterminant(m);
-                        }
+                        if (pilihanInput == 1 || namaFile != "") {
+                            float det = 0;
+                            if (chosen2 == 1) {
+                                det = reduksiBaris.getDeterminant(m);
+                            } else if (chosen2 == 2) {
+                                det = Cofactor.cofactorDeterminant(m);
+                            }
 
-                        // tampil solusi
-                        System.out.println("\nDeterminan: " + det);
-                        
-                        // simpan hasil
-                        System.out.println();
+                            // tampil solusi
+                            System.out.println("\nDeterminan: " + det);
+                            
+                            // simpan hasil
+                            System.out.println();
 
-                        System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
-                        char confirmation = sc.next().charAt(0);
-                        if (confirmation == 'Y') {
-                            System.out.print("Masukkan nama file (tanpa \".txt\"): ");
-                            String filename = sc.next();
-                            WriteToFile.writeFile(Float.toString(det), filename);
+                            System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
+                            char confirmation = sc.next().charAt(0);
+                            if (confirmation == 'Y') {
+                                System.out.print("Masukkan nama file (pakai \".txt\"): ");
+                                String filename = sc.next();
+                                WriteToFile.writeFile(Float.toString(det), filename);
+                            }
+                        } else {
+                            System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
                         }
                     } else {
                         System.out.println("---------------OPSI TIDAK TERSEDIA---------------\n");
@@ -278,7 +284,7 @@ public class driverTubes1 {
                         System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
                         char confirmation = sc.next().charAt(0);
                         if (confirmation == 'Y') {
-                            System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                            System.out.print("Masukkan nama file (pakai \".txt\"): ");
                             String filename = sc.next();
                             String stringSolution = WriteToFile.MatrixtoString(mNew);
                             WriteToFile.writeFile(stringSolution, filename);
@@ -297,7 +303,7 @@ public class driverTubes1 {
                 System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
                 char confirmation = sc.next().charAt(0);
                 if (confirmation == 'Y') {
-                    System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                    System.out.print("Masukkan nama file (pakai \".txt\"): ");
                     String filename = sc.next();
                     WriteToFile.writeFile(Float.toString(y), filename);
                 }
@@ -309,7 +315,7 @@ public class driverTubes1 {
                 System.out.print("Apakah ingin disimpan ke file? (Y/N): ");
                 char confirmation = sc.next().charAt(0);
                 if (confirmation == 'Y') {
-                    System.out.print("Masukkan nama file (tanpa \".txt\"): ");
+                    System.out.print("Masukkan nama file (pakai \".txt\"): ");
                     String filename = sc.next();
                     WriteToFile.writeFile(Float.toString(result), filename);
                 }

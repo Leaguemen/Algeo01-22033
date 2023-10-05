@@ -33,7 +33,7 @@ public class WriteToFile {
 
    public static void writeFile(String x,String fileName){
         try {
-      File fileDirectory = new File("destination\\" + fileName + ".txt");
+      File fileDirectory = new File("destination\\" + fileName);
       if (!fileDirectory.exists()){
         fileDirectory.createNewFile();
       }
