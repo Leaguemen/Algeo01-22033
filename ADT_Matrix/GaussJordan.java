@@ -109,12 +109,12 @@ public class GaussJordan {
             Matrix.displayMatrix(m);
             if(Gauss.uniqueSolution(m)){
                 float[] solution = new float[m.rowEff];
-                for(int i =0;i<m.rowEff;i++){
-                    solution[i]=m.memory[i][m.colEff-1];
-                }
                 System.out.println("unique");
                 echelontoEchelonBaris(m);
-                Matrix.displayMatrix(m); 
+                Matrix.displayMatrix(m);
+                for(int i =0;i<m.rowEff;i++){
+                    solution[i]=m.memory[i][m.colEff-1];
+                } 
                 return solution;
             }
             else if(Gauss.noSolution(m)){

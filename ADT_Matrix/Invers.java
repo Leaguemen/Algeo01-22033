@@ -39,20 +39,26 @@ public class Invers {
     }
 
     public static Matrix InverseWithGaussJordan (Matrix m) {
+        Matrix temp = new Matrix(m.rowEff, m.colEff);
+        for (int i =0; i < m.rowEff; i++) {
+            for (int j =0; j < m.colEff; j++) {
+                temp.memory[i][j] = m.memory[i][j];
+            }
+        }
         if (reduksiBaris.getDeterminant(m) != 0) {
             int i, j, k;
             int n = 0;
-            Matrix hasilInvers = MakeIdentity(m.rowEff,m.colEff);
+            Matrix hasilInvers = MakeIdentity(temp.rowEff,temp.colEff);
 
-            for (i = 0; i < m.colEff; i++) {
+            for (i = 0; i < temp.colEff; i++) {
                 // Mencari element diagonal bukan nol
-                if (m.memory[i][i] == 0) {
+                if (temp.memory[i][i] == 0) {
                     boolean tidakKetemu = true;
                     j = i+1;
-                    while (tidakKetemu && j <m.rowEff) {
+                    while (tidakKetemu && j <temp.rowEff) {
                         if (m.memory[j][i] != 0) {
                             tidakKetemu = false;
-                            Matrix.Swap(m, i, j, n);
+                            Matrix.Swap(temp, i, j, n);
                             Matrix.Swap(hasilInvers, i, j, n);
                         }
                         j++;
@@ -60,14 +66,14 @@ public class Invers {
                 }
 
                 // Menjadikan elemen diagonal manjadi 1 utama
-                Matrix.MultiplyRow(hasilInvers, i, (float)1/m.memory[i][i]);
-                Matrix.MultiplyRow(m, i, (float)1/m.memory[i][i]);
+                Matrix.MultiplyRow(hasilInvers, i, (float)1/temp.memory[i][i]);
+                Matrix.MultiplyRow(m, i, (float)1/temp.memory[i][i]);
                 
                 // Mengenolkan elemen di bawah dan atas 1 utama
-                for (k = 0; k < m.rowEff; k++) {
+                for (k = 0; k < temp.rowEff; k++) {
                     if (k != i) {
-                        float x = (-1)*m.memory[k][i];
-                        Matrix.AddRowByRow(m, k, i, x);
+                        float x = (-1)*temp.memory[k][i];
+                        Matrix.AddRowByRow(temp, k, i, x);
                         Matrix.AddRowByRow(hasilInvers, k, i, x);
                     }
                 }
@@ -80,18 +86,24 @@ public class Invers {
     }
 
     public static Matrix InverseWithCofactor (Matrix m) {
+        Matrix temp = new Matrix(m.rowEff, m.colEff);
+        for (int i =0; i < m.rowEff; i++) {
+            for (int j =0; j < m.colEff; j++) {
+                temp.memory[i][j] = m.memory[i][j];
+            }
+        }
         if (reduksiBaris.getDeterminant(m) != 0)  {
-            Matrix hasilInvers = new Matrix(m.rowEff, m.colEff);
+            Matrix hasilInvers = new Matrix(temp.rowEff, temp.colEff);
             int i, j;
 
             for (i = 0; i < m.rowEff; i++) {
                 for (j = 0; j < m.colEff; j++) {
-                    hasilInvers.memory[i][j] = ADT_Matrix.Cofactor.entryCofactor(m, i, j);
+                    hasilInvers.memory[i][j] = ADT_Matrix.Cofactor.entryCofactor(temp, i, j);
                 }
             }
 
             hasilInvers = Matrix.transpose(hasilInvers);
-            hasilInvers = Matrix.multiplyByConst(hasilInvers, (float)1/Cofactor.cofactorDeterminant(m));
+            hasilInvers = Matrix.multiplyByConst(hasilInvers, (float)1/Cofactor.cofactorDeterminant(temp));
             return hasilInvers;
         } else {
             Matrix hasilInvers = new Matrix(0, 0);

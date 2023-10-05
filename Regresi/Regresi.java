@@ -59,7 +59,6 @@ public class Regresi {
                 hasil.memory[i][j] = sumColTimesCol(m, i-1, j-1);
             }
         }
-
         return hasil;
     }
 
@@ -76,9 +75,9 @@ public class Regresi {
     }
 
     public static float hitungNilai(float[] solusi, float[] peubah, int n) {
-        float result = 0;
+        float result = solusi[0];
         for (int i = 0; i < n; i++) {
-            result += (solusi[i]*peubah[i]);
+            result += (solusi[i+1]*peubah[i]);
         }
         return result;
     }

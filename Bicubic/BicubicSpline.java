@@ -3,7 +3,6 @@ import ADT_Matrix.*;
 import java.util.Scanner;
 
 public class BicubicSpline {
-    private static Scanner in = new Scanner(System.in);
     public static float interpolation (Matrix m, float targetX, float targetY) {
         int i, j, x, y;
         float result;
@@ -56,8 +55,8 @@ public class BicubicSpline {
 
         // temukan matriks ma
         Matrix inversemX = Invers.InverseWithGaussJordan(mX);
+        ma = Matrix.multiplyMatrix(inversemX, mY);
 
-        Matrix.displayMatrix(ma);
         result = 0;
         for(i=0;i<16;i++) {
             result += (ma.memory[i][0] * (Math.pow(targetX,i%4) * Math.pow(targetY,i/4)));
