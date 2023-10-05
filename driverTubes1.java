@@ -2,6 +2,8 @@ import ADT_Matrix.*;
 import Bicubic.BicubicSpline;
 import Interpolasi.Interpolasi_Polinomial;
 import Regresi.Regresi;
+
+import java.io.File;
 import java.util.Scanner;
 
 public class driverTubes1 {
@@ -24,6 +26,21 @@ public class driverTubes1 {
         }
         return mAug;
     }
+
+    public static String pilihFile (String namaFile) {
+        boolean isFileExist = false;
+        while (!isFileExist) {
+            System.out.print("Masukkan nama file : ");
+            namaFile = sc.nextLine();
+
+            isFileExist = ReadFile.isFileExist(namaFile);
+            if (!isFileExist) {
+                System.out.println("File tidak ditemukan.");
+            }
+        }
+        return namaFile;
+    }
+
     public static void main(String args[]) {
         boolean exit = false;
         while (!exit) {
@@ -54,7 +71,12 @@ public class driverTubes1 {
                 float[] solution = new float[0];
                 boolean detNotZero = true;
                 if (chosen1 >= 1 && chosen1 <= 4) {
-                    System.out.print("Pilih cara input:\n1. Terminal\n2. File\nPilihan: ");
+                    System.out.print("Pilih input matriks:\n1. Input melalui teriman\n2. Input melalu file .txt\nPilihan: ");
+                    int pilihanInput = sc.nextInt();
+
+                    if (pilihanInput == 1) {
+                        
+                    }
                     if (chosen1 == 1) {
                         System.out.println("---------------METODE ELIMINASI GAUSS---------------");
                         Matrix mAug = inputSPLMatrix();
@@ -91,7 +113,7 @@ public class driverTubes1 {
                             System.out.print("x" + (i +1) + "=");
                             System.out.print(solution[i]);
                             if (i != solution.length - 1) {
-                                System.out.print(',');
+                                System.out.print(", ");
                             } else {
                                 System.out.println();
                             }
