@@ -19,8 +19,7 @@
 4. Solving interpolation problems<br>
 5. Solving bicubic interpolation problems<br>
 6. Solving double regression problems<br>
-7. Image scaling with bicubic interpolation (Enlarging to 2x original size)<br>
-8. Saving results to file<br>
+7. Saving results to file<br>
 
 <h6>How to run our Matrix Calculator</h6>
 1. Clone this repository to your local<br>
