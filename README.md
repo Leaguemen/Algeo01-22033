@@ -28,4 +28,4 @@
 4. Explore the features available<br>
 
 <h3>Link to the Matrix Library file (.jar)</h3>
-https://drive.google.com/drive/folders/1Std_CDIaT7kYmSG7ijgcL_5AfJnCL78U?usp=sharing
+https://drive.google.com/file/d/1WVJcSmNKcc7ltr7T9NBuxbvcJV_OawOV/view?usp=drive_link
