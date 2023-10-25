@@ -262,12 +262,6 @@ public class driverTubes1 {
                         Matrix mNew = new Matrix(0, 0);
                         if (chosen3 == 1) {
                             mNew = Invers.InverseWithGaussJordan(m);
-                            if (mNew.rowEff != 0) {
-                                System.out.println("Matriks hasil invers: ");
-                                Matrix.displayMatrix(mNew);
-                            } else {
-                                System.out.println("Matriks singular");
-                            }
                         } else if (chosen3 == 2) {
                             mNew = Invers.InverseWithCofactor(m);
                         }
@@ -406,7 +400,7 @@ public class driverTubes1 {
                             Matrix m = ReadFile.readMatrixFromFile(namaFile);
                             n = m.colEff-1;
                             peubah = ReadFile.readBottomLine(namaFile);
-                            Matrix matrixM = Regresi.prosesRegresiBerganda(n, m.rowEff);
+                            Matrix matrixM = Regresi.normalEstimationEquation(m);
                             solusi = Regresi.ambilHasil(matrixM);
                         }
                     }

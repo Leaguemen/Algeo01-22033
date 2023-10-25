@@ -1,7 +1,5 @@
 package ADT_Matrix;
 
-import java.util.*;
-
 public class Invers {
     
     public static Matrix MakeIdentity (int Row, int Col) {
@@ -67,7 +65,7 @@ public class Invers {
 
                 // Menjadikan elemen diagonal manjadi 1 utama
                 Matrix.MultiplyRow(hasilInvers, i, (float)1/temp.memory[i][i]);
-                Matrix.MultiplyRow(m, i, (float)1/temp.memory[i][i]);
+                Matrix.MultiplyRow(temp, i, (float)1/temp.memory[i][i]);
                 
                 // Mengenolkan elemen di bawah dan atas 1 utama
                 for (k = 0; k < temp.rowEff; k++) {
@@ -113,7 +111,7 @@ public class Invers {
 
     public static float[] SolusiSPLDenganInvers (Matrix m, int pilihan) {
         Matrix A = MatriksSoal(m);
-        if (Cofactor.cofactorDeterminant(A) != 0) {
+        if (reduksiBaris.getDeterminant(A) != 0) {
             Matrix Ainvers = new Matrix(A.rowEff,A.colEff);
             int i;
             Matrix b = MatriksJawaban(m);
